@@ -1,8 +1,12 @@
 import express, { Request, Response } from "express";
 import { connectDB } from "./lib/prisma.db";
+import cors from "cors";
 
 const app = express();
 const PORT = 5000;
+
+app.use(express.json());
+app.use(cors());
 
 app.get("/", (_req: Request, res: Response) => {
   res.json({ status: 200 });
