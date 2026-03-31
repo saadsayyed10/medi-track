@@ -1,3 +1,5 @@
+// backend/src/lib/token.ts
+
 import jwt from "jsonwebtoken";
 import { type GenerateToken } from "../types/user.type";
 import { ENV } from "../config/env.config";
