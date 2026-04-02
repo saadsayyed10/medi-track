@@ -11,4 +11,7 @@ const userRouter = Router();
 // Route to register patient account
 userRouter.post("/register", userController.signUpPatientController);
 
+// Route to login patient account
+userRouter.post("/login", userController.signInPatientController);
+
 export default userRouter;
