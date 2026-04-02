@@ -3,7 +3,7 @@
 // Import request and response to handle API
 import { Request, Response } from "express";
 
-// Import all patient services in one
+// Import all patient services bundled in one instance
 import * as patientService from "../services/user.service";
 
 /*
