@@ -1,14 +1,15 @@
 // backend/src/api/services/user.service.ts
 
-// Import
+// Import libraries
 import prisma from "../../lib/prisma.orm";
 import bcryptjs from "bcryptjs";
 
+// Import files
 import { type SignUpType } from "../../types/user.type";
 import { generateToken } from "../../lib/token";
 
 /* Register Patient account service */
-export const signUpPatient = async (data: SignUpType) => {
+export const signUpPatientService = async (data: SignUpType) => {
   const existing = await prisma.patient.findUnique({
     where: {
       email: data.email,
