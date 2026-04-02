@@ -5,7 +5,7 @@ import prisma from "../../lib/prisma.orm";
 import bcryptjs from "bcryptjs";
 
 // Import files
-import { type SignUpType } from "../../types/user.type";
+import { type SignUpType, SignInType } from "../../types/user.type";
 import { generateToken } from "../../lib/token";
 
 /* Register Patient account service */
@@ -33,6 +33,28 @@ export const signUpPatientService = async (data: SignUpType) => {
       password: hashPassword,
     },
   });
+
+  // Generate and assign token to the patient account
+  const token = generateToken(user.id);
+
+  return { token, user };
+};
+
+/* Login Patient account service */
+export const signInPatientService = async (data: SignInType) => {
+  const user = await prisma.patient.findUnique({
+    where: {
+      email: data.email,
+    },
+  });
+
+  // Check if patient doesn't exist
+  if (!user) throw new Error("Patient accound does not exist");
+
+  const isValidPassword = await bcryptjs.compare(data.password, user.password);
+
+  // Check if password is incorrect
+  if (!isValidPassword) throw new Error("Password is incorrect");
 
   // Generate and assign token to the patient account
   const token = generateToken(user.id);

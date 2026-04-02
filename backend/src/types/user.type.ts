@@ -14,3 +14,9 @@ export type SignUpType = {
   allergies: string[];
   healthIssues: string[];
 };
+
+// Used in backend/src/api/services/user.service.ts (sign-in)
+export type SignInType = {
+  email: string;
+  password: string;
+};
