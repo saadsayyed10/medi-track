@@ -3,7 +3,7 @@
 // Import library
 import { Router } from "express";
 
-// Import routes
+// Import routes from files
 import userRouter from "./user.route";
 
 const mainRouter = Router();

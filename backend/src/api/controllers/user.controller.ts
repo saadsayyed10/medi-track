@@ -32,7 +32,7 @@ export const signUpPatientController = async (req: Request, res: Response) => {
   try {
     const { token, user } = await patientService.signUpPatientService(data);
     res.status(201).json({ message: "Patient registered", token, user });
-    console.log("Patient Registered", JSON.stringify(user));
+    console.log("Patient Registered:\n", JSON.stringify(user));
   } catch (error: any) {
     console.error(error.message);
     return res.status(500).json({ error: error.message });
