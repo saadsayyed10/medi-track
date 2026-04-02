@@ -38,3 +38,28 @@ export const signUpPatientController = async (req: Request, res: Response) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+/*
+Login Patient account controller
+Method: POST
+Endpoint: /api/users/lgoin
+*/
+export const signInPatientController = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  const data = { email, password };
+
+  // Inputs cannot be left null
+  if (!data) {
+    console.error("All fields are required");
+    return res.status(404).json({ error: "All fields are required" });
+  }
+
+  try {
+    const { token, user } = await patientService.signInPatientService(data);
+    res.status(201).json({ message: "Patient logged in", token, user });
+    console.log("Patient logged in:\n", JSON.stringify(user));
+  } catch (error: any) {
+    console.error(error.message);
+    return res.status(500).json({ error: error.message });
+  }
+};
