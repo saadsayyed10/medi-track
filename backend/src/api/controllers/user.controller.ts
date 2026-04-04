@@ -56,7 +56,7 @@ export const signInPatientController = async (req: Request, res: Response) => {
 
   try {
     const { token, user } = await patientService.signInPatientService(data);
-    res.status(201).json({ message: "Patient logged in", token, user });
+    res.status(200).json({ message: "Patient logged in", token, user });
     console.log("Patient logged in:\n", JSON.stringify(user));
   } catch (error: any) {
     console.error(error.message);
