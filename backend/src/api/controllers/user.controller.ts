@@ -93,7 +93,7 @@ export const patientAccountController = async (req: Request, res: Response) => {
 
 /*
 Reset/Forgotten password controller
-Method: POST
+Method: PATCH
 Header: Authorization
 Endpoint: /api/users/reset-password
 */

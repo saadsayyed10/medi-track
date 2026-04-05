@@ -98,12 +98,14 @@ export const resetPasswordService = async (email: string) => {
   // Converting UUID to a 10 character password
   const newPassword = v4().slice(0, 10);
 
+  const hashPassword = await bcryptjs.hash(newPassword, 10);
+
   const user = await prisma.patient.update({
     where: {
       email,
     },
     data: {
-      password: newPassword,
+      password: hashPassword,
     },
   });
 
@@ -111,7 +113,7 @@ export const resetPasswordService = async (email: string) => {
   await resetMail(user.email, user.password);
 
   const reciepient = user.email;
-  const password = user.password;
+  const password = newPassword;
 
   return { reciepient, password };
 };
