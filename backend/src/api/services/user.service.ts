@@ -3,11 +3,18 @@
 // Import libraries
 import prisma from "../../lib/prisma.orm";
 import bcryptjs from "bcryptjs";
-
-// Import files
-import { type SignUpType, SignInType } from "../../types/user.type";
-import { generateToken } from "../../lib/token";
 import { v4 } from "uuid";
+
+// Import types
+import {
+  type SignUpType,
+  AllergyAndHealthUpdateType,
+  ChangePasswordType,
+  SignInType,
+} from "../../types/user.type";
+
+// Import helper functions
+import { generateToken } from "../../lib/token";
 import { resetMail } from "../../mails/passwords.mail.";
 
 /* Register Patient account service */
@@ -121,8 +128,7 @@ export const resetPasswordService = async (email: string) => {
 /* Change password service */
 export const changePasswordService = async (
   userId: string,
-  oldPassword: string,
-  newPassword: string,
+  data: ChangePasswordType,
 ) => {
   const user = await prisma.patient.findUnique({
     where: {
@@ -130,7 +136,10 @@ export const changePasswordService = async (
     },
   });
 
-  const isValidPassword = await bcryptjs.compare(oldPassword, user?.password!);
+  const isValidPassword = await bcryptjs.compare(
+    data.oldPassword,
+    user?.password!,
+  );
 
   // Check if current password is incorrect
   if (!isValidPassword) throw new Error("Current password is incorrect");
@@ -141,7 +150,25 @@ export const changePasswordService = async (
       id: userId,
     },
     data: {
-      password: newPassword,
+      password: data.newPassword,
     },
   });
+};
+
+/* Register Patient account service */
+export const updatePatientService = async (
+  userId: string,
+  data: AllergyAndHealthUpdateType,
+) => {
+  const user = await prisma.patient.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      allergies: data.allergies,
+      health_issues: data.healthIssues,
+    },
+  });
+
+  return user;
 };

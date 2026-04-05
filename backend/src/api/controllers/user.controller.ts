@@ -153,6 +153,8 @@ export const changePasswordController = async (req: Request, res: Response) => {
       .json({ error: "Make sure old and new passwords are not left empty" });
   }
 
+  const data = { oldPassword, newPassword };
+
   try {
     // If user is not authorized, abort request
     if (!(req as any).user!) {
@@ -164,8 +166,49 @@ export const changePasswordController = async (req: Request, res: Response) => {
 
     const user = await patientService.changePasswordService(
       (req as any).user.id,
-      oldPassword,
-      newPassword,
+      data,
+    );
+    res.status(200).json({
+      message: "Password change/update successful",
+      user,
+    });
+    console.log("Password change/update successful");
+  } catch (error: any) {
+    console.error(error.message);
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+/*
+Update patient's allegies and health issues controller
+Method: PUT
+Header: Authorization
+Endpoint: /api/users/update
+*/
+export const updatePatientController = async (req: Request, res: Response) => {
+  const { allergies, healthIssues } = req.body;
+  const data = { allergies, healthIssues };
+
+  // All fields are required
+  if (!data) {
+    console.log("Allergies and Health issues cannot be left null");
+    return res
+      .status(404)
+      .json({ error: "Allergies and Health issues cannot be left null" });
+  }
+
+  try {
+    // If user is not authorized, abort request
+    if (!(req as any).user!) {
+      console.log("Unauthorized: Cannot fetch as token is not provided");
+      return res
+        .status(401)
+        .json({ error: "Unauthorized: Cannot fetch as token is not provided" });
+    }
+
+    const user = await patientService.updatePatientService(
+      (req as any).user.id,
+      data,
     );
     res.status(200).json({
       message: "Password change/update successful",

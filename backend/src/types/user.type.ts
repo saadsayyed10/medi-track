@@ -7,7 +7,7 @@ export interface DecodeTokenType extends JwtPayload {
   userId: string;
 }
 
-// Used in backend/src/api/services/user.service.ts (sign-up)
+// Used in backend/src/api/services/user.service.ts
 export type SignUpType = {
   name: string;
   email: string;
@@ -17,8 +17,20 @@ export type SignUpType = {
   healthIssues: string[];
 };
 
-// Used in backend/src/api/services/user.service.ts (sign-in)
+// Used in backend/src/api/services/user.service.ts
 export type SignInType = {
   email: string;
   password: string;
+};
+
+// Used in backend/src/api/services/user.service.ts
+export type ChangePasswordType = {
+  oldPassword: string;
+  newPassword: string;
+};
+
+// Used in backend/src/api/services/user.service.ts
+export type AllergyAndHealthUpdateType = {
+  allergies: string[];
+  healthIssues: string[];
 };
