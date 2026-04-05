@@ -221,3 +221,34 @@ export const updatePatientController = async (req: Request, res: Response) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+/*
+Delete Patient's account controller
+Method: DELETE
+Header: Authorization
+Endpoint: /api/users/delete
+*/
+export const deletePatientController = async (req: Request, res: Response) => {
+  try {
+    // If user is not authorized, abort request
+    if (!(req as any).user!) {
+      console.log("Unauthorized: Cannot fetch as token is not provided");
+      return res
+        .status(401)
+        .json({ error: "Unauthorized: Cannot fetch as token is not provided" });
+    }
+
+    const { name, email } = await patientService.deletePatientService(
+      (req as any).user.id,
+    );
+    res.status(200).json({
+      message: `Patient - ${name} with email:${email} account deletion successful`,
+    });
+    console.log(
+      `Patient - ${name} with email:${email} account deletion successful`,
+    );
+  } catch (error: any) {
+    console.error(error.message);
+    return res.status(400).json({ error: error.message });
+  }
+};
