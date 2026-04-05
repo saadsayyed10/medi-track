@@ -115,3 +115,31 @@ export const resetPasswordService = async (email: string) => {
 
   return { reciepient, password };
 };
+
+/* Change password service */
+export const changePasswordService = async (
+  userId: string,
+  oldPassword: string,
+  newPassword: string,
+) => {
+  const user = await prisma.patient.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  const isValidPassword = await bcryptjs.compare(oldPassword, user?.password!);
+
+  // Check if current password is incorrect
+  if (!isValidPassword) throw new Error("Current password is incorrect");
+
+  // Update to new password
+  return await prisma.patient.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      password: newPassword,
+    },
+  });
+};
