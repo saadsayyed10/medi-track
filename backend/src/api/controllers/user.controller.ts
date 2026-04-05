@@ -90,3 +90,42 @@ export const patientAccountController = async (req: Request, res: Response) => {
     return res.status(400).json({ error: error.message });
   }
 };
+
+/*
+Reset/Forgotten password controller
+Method: POST
+Header: Authorization
+Endpoint: /api/users/reset-password
+*/
+export const resetPasswordController = async (req: Request, res: Response) => {
+  const { email } = req.body;
+
+  if (!email) {
+    console.log("Email is required to reset password");
+    return res
+      .status(404)
+      .json({ error: "Email is required to reset password" });
+  }
+
+  try {
+    // If user is not authorized, abort request
+    if (!(req as any).user!) {
+      console.log("Unauthorized: Cannot fetch as token is not provided");
+      return res
+        .status(401)
+        .json({ error: "Unauthorized: Cannot fetch as token is not provided" });
+    }
+
+    const { reciepient, password } =
+      await patientService.resetPasswordService(email);
+    res.status(200).json({
+      message: "Password reset successful, email sent",
+      reciepient,
+      password,
+    });
+    console.log(`Email: ${reciepient}\nNew password: ${password}`);
+  } catch (error: any) {
+    console.error(error.message);
+    return res.status(400).json({ error: error.message });
+  }
+};
