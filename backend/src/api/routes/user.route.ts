@@ -6,6 +6,7 @@ import { Router } from "express";
 // Import all controllers bundled in one instance
 import * as userController from "../controllers/user.controller";
 import { protectAuth } from "../../middleware/auth.middleware";
+import { resetPasswordEmailLimiter } from "../../middleware/rate-limit.middleware";
 
 const userRouter = Router();
 
@@ -20,6 +21,14 @@ userRouter.get(
   "/profile",
   protectAuth,
   userController.patientAccountController,
+);
+
+// Route to reset patient's forgotten account password (token needed)
+userRouter.post(
+  "/reset-password",
+  resetPasswordEmailLimiter,
+  protectAuth,
+  userController.resetPasswordController,
 );
 
 export default userRouter;
