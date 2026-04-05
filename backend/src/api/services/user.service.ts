@@ -61,3 +61,22 @@ export const signInPatientService = async (data: SignInType) => {
 
   return { token, user };
 };
+
+/* Fetch Patient account service */
+export const patientAccountService = async (userId: string) => {
+  const user = await prisma.patient.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      name: true,
+      email: true,
+      age: true,
+      allergies: true,
+      health_issues: true,
+      created_at: true,
+    },
+  });
+
+  return { user };
+};

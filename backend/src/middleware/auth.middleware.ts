@@ -1,14 +1,11 @@
 // backend/src/middleware/auth.middleware.ts
 
 // Import libraries and instances to protect API endpoints
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { ENV } from "../config/env.config";
 import prisma from "../lib/prisma.orm";
-
-interface Decoded extends JwtPayload {
-  userId: string;
-}
+import { GenerateTokenType } from "../types/user.type";
 
 export const protectAuth = async (
   req: Request,
@@ -25,7 +22,7 @@ export const protectAuth = async (
 
     const token = authHeader.split(" ")[1];
 
-    const decoded = jwt.verify(token, ENV.JWT_SECRET!) as Decoded;
+    const decoded = jwt.verify(token, ENV.JWT_SECRET!) as GenerateTokenType;
 
     const user = await prisma.patient.findUnique({
       where: {
