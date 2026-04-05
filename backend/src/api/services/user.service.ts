@@ -175,3 +175,18 @@ export const updatePatientService = async (
 
   return { healthIssues, allergies };
 };
+
+/* Delete Patient's account service */
+export const deletePatientService = async (userId: string) => {
+  // Permanently delete patient's account
+  const user = await prisma.patient.delete({
+    where: {
+      id: userId,
+    },
+  });
+
+  const name = user.name;
+  const email = user.email;
+
+  return { name, email };
+};
