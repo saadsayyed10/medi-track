@@ -67,6 +67,7 @@ export const signInPatientController = async (req: Request, res: Response) => {
 /*
 Fetch Patient account controller
 Method: GET
+Header: Authorization
 Endpoint: /api/users/profile
 */
 export const patientAccountController = async (req: Request, res: Response) => {
