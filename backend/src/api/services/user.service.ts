@@ -64,6 +64,7 @@ export const signInPatientService = async (data: SignInType) => {
 
 /* Fetch Patient account service */
 export const patientAccountService = async (userId: string) => {
+  // Password shouldn't been fetched for profile
   const user = await prisma.patient.findUnique({
     where: {
       id: userId,
