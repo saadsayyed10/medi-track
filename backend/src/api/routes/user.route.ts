@@ -41,4 +41,11 @@ userRouter.put(
 // Route to update patient's allergies and health issues (token needed)
 userRouter.put("/update", protectAuth, userController.updatePatientController);
 
+// Route to delete patient's account (token needed)
+userRouter.delete(
+  "/delete",
+  protectAuth,
+  userController.deletePatientController,
+);
+
 export default userRouter;
