@@ -129,3 +129,51 @@ export const resetPasswordController = async (req: Request, res: Response) => {
     return res.status(400).json({ error: error.message });
   }
 };
+
+/*
+Change password controller
+Method: PUT
+Header: Authorization
+Endpoint: /api/users/change-password
+*/
+export const changePasswordController = async (req: Request, res: Response) => {
+  const { oldPassword, newPassword } = req.body;
+
+  // Validity check
+  if (!newPassword || newPassword < 8) {
+    console.log("Please enter a valid new password");
+    return res.status(400).json({ error: "Please enter a valid new password" });
+  }
+
+  // All fields are required
+  if (!oldPassword) {
+    console.log("Make sure old and new passwords are not left empty");
+    return res
+      .status(404)
+      .json({ error: "Make sure old and new passwords are not left empty" });
+  }
+
+  try {
+    // If user is not authorized, abort request
+    if (!(req as any).user!) {
+      console.log("Unauthorized: Cannot fetch as token is not provided");
+      return res
+        .status(401)
+        .json({ error: "Unauthorized: Cannot fetch as token is not provided" });
+    }
+
+    const user = await patientService.changePasswordService(
+      (req as any).user.id,
+      oldPassword,
+      newPassword,
+    );
+    res.status(200).json({
+      message: "Password change/update successful",
+      user,
+    });
+    console.log("Password change/update successful");
+  } catch (error: any) {
+    console.error(error.message);
+    return res.status(500).json({ error: error.message });
+  }
+};
