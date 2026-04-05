@@ -3,7 +3,7 @@
 import { JwtPayload } from "jsonwebtoken";
 
 // Used in backend/src/middleware/auth.middleware.ts
-export interface GenerateTokenType extends JwtPayload {
+export interface DecodeTokenType extends JwtPayload {
   userId: string;
 }
 
