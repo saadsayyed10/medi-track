@@ -206,15 +206,16 @@ export const updatePatientController = async (req: Request, res: Response) => {
         .json({ error: "Unauthorized: Cannot fetch as token is not provided" });
     }
 
-    const user = await patientService.updatePatientService(
-      (req as any).user.id,
-      data,
-    );
+    const { allergies, healthIssues } =
+      await patientService.updatePatientService((req as any).user.id, data);
     res.status(200).json({
-      message: "Password change/update successful",
-      user,
+      message: "Updated patient allergies and health issues",
+      allergies,
+      healthIssues,
     });
-    console.log("Password change/update successful");
+    console.log(
+      `Updated patient allergies and health issues:\n${JSON.stringify(allergies)}\n${JSON.stringify(healthIssues)}`,
+    );
   } catch (error: any) {
     console.error(error.message);
     return res.status(500).json({ error: error.message });

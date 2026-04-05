@@ -170,5 +170,8 @@ export const updatePatientService = async (
     },
   });
 
-  return user;
+  const healthIssues = user.health_issues;
+  const allergies = user.allergies;
+
+  return { healthIssues, allergies };
 };
