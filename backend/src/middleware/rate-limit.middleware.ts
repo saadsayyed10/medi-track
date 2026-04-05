@@ -1,5 +1,6 @@
 // backend/src/middleware/rate-limit.middleware.ts
 
+// Import helper function
 import { rateLimiter } from "../lib/rate-limit";
 
 export const resetPasswordEmailLimiter = rateLimiter({

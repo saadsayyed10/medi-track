@@ -1,7 +1,10 @@
 // backend/src/middleware/rate-limit.middleware.ts
 
+// Import library
 import rateLimit from "express-rate-limit";
-import { RateLimitType } from "../types/rate-limit.type";
+
+// Import type safety
+import { type RateLimitType } from "../types/rate-limit.type";
 
 export const rateLimiter = (option: RateLimitType) => {
   const limiter = rateLimit({
