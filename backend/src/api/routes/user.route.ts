@@ -38,4 +38,7 @@ userRouter.put(
   userController.changePasswordController,
 );
 
+// Route to update patient's allergies and health issues (token needed)
+userRouter.put("/update", protectAuth, userController.updatePatientController);
+
 export default userRouter;
