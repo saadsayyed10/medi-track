@@ -16,10 +16,10 @@ userRouter.post("/register", userController.signUpPatientController);
 userRouter.post("/login", userController.signInPatientController);
 
 // Route to fetch patient account (token needed)
-userRouter.post(
+userRouter.get(
   "/profile",
   protectAuth,
-  userController.signInPatientController,
+  userController.patientAccountController,
 );
 
 export default userRouter;
