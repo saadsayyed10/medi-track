@@ -31,4 +31,11 @@ userRouter.post(
   userController.resetPasswordController,
 );
 
+// Route to change patient's account password (token needed)
+userRouter.put(
+  "/change-password",
+  protectAuth,
+  userController.changePasswordController,
+);
+
 export default userRouter;
