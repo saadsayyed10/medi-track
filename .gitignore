@@ -1,0 +1,56 @@
+# Root
+.vscode/
+
+# AI Agent
+agent/.venv
+agent/.env
+agent/__pycache__
+
+# Business-Logic Server (Backend)
+backend/node_modules
+backend/.env
+src/prisma/generated
+
+# Mobile app (Frontend)
+
+# dependencies
+frontend/node_modules/
+
+# Expo
+frontend/frontend/.expo/
+frontend/dist/
+frontend/web-build/
+frontend/expo-env.d.ts
+
+# Native
+frontend/.kotlin/
+frontend/*.orig.*
+frontend/*.jks
+frontend/*.p8
+frontend/*.p12
+frontend/*.key
+frontend/*.mobileprovision
+
+# Metro
+frontend/.metro-health-check*
+
+# debug
+frontend/npm-debug.*
+frontend/yarn-debug.*
+frontend/yarn-error.*
+
+# macOS
+frontend/.DS_Store
+frontend/*.pem
+
+# local env files
+frontend/.env*.local
+
+# typescript
+frontend/*.tsbuildinfo
+
+frontend/app-example
+
+# generated native folders
+frontend/ios
+frontend/android

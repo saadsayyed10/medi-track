@@ -1,0 +1,9 @@
+from pydantic import BaseModel
+
+class HealthIssues(BaseModel):
+    name: str
+    healthIssue: str
+
+class Allergies(BaseModel):
+    name: str
+    allergies: str

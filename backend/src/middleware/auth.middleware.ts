@@ -1,0 +1,52 @@
+// backend/src/middleware/auth.middleware.ts
+
+// Import libraries and instances to protect API endpoints
+import jwt from "jsonwebtoken";
+import { Request, Response, NextFunction } from "express";
+import { ENV } from "../config/env.config";
+import prisma from "../lib/prisma.orm";
+import { DecodeTokenType } from "../types/user.type";
+
+export const protectAuth = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const authHeader = req.header("Authorization");
+
+    // Throw error if headers are invalid or missing
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ error: "Unauthorized: Invalid token" });
+    }
+
+    const token = authHeader.split(" ")[1];
+
+    const decoded = jwt.verify(token, ENV.JWT_SECRET!) as DecodeTokenType;
+
+    const user = await prisma.patient.findUnique({
+      where: {
+        id: decoded.userId,
+      },
+    });
+
+    // Throw error if token is not provided
+    if (!token) {
+      return res
+        .status(401)
+        .json({ error: "Unauthorized: token not provided" });
+    }
+
+    // Throw error if user is not tagged with token
+    if (!user) {
+      return res.status(401).json({ error: "Unauthorized: user not found" });
+    }
+
+    (req as any).user = user;
+
+    next();
+  } catch (error: any) {
+    console.log(error.message);
+    return res.status(401).json({ error: error.message });
+  }
+};
