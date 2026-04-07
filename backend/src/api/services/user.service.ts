@@ -144,13 +144,15 @@ export const changePasswordService = async (
   // Check if current password is incorrect
   if (!isValidPassword) throw new Error("Current password is incorrect");
 
+  const hashPassword = await bcryptjs.hash(data.newPassword, 10);
+
   // Update to new password
   return await prisma.patient.update({
     where: {
       id: userId,
     },
     data: {
-      password: data.newPassword,
+      password: hashPassword,
     },
   });
 };
