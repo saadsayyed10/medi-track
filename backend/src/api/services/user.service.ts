@@ -117,7 +117,7 @@ export const resetPasswordService = async (email: string) => {
   });
 
   // Send new password to patient's email
-  await resetMail(user.email, user.password);
+  await resetMail(user.email, newPassword);
 
   const reciepient = user.email;
   const password = newPassword;
