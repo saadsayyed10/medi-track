@@ -7,6 +7,8 @@ import { ENV } from "./config/env.config";
 const app = express();
 const PORT = ENV.PORT;
 
+app.set("trust proxy", 1);
+
 app.use(express.json());
 app.use(cors());
 
