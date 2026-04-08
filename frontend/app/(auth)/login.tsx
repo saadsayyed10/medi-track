@@ -20,7 +20,6 @@ const Login = () => {
   const { setAuth, hydrate } = useAuth();
 
   const handleLogin = async () => {
-    setLoading(true);
     if (!password) {
       alert("Password is required to login");
       return;
@@ -29,6 +28,8 @@ const Login = () => {
       alert("Email is required to login");
       return;
     }
+
+    setLoading(true);
     try {
       const res = await loginUserAPI({ email, password });
       const { token, user } = res.data;
@@ -38,9 +39,8 @@ const Login = () => {
       setPassword("");
       alert("Logged in");
     } catch (error: any) {
-      console.log("Status:", error.response?.status);
-      console.log("Data:", JSON.stringify(error.response?.data));
-      console.log("Message:", error.message);
+      const message = error.response?.data?.error ?? error.message;
+      alert(message);
     } finally {
       setLoading(false);
       hydrate();
