@@ -37,8 +37,13 @@ export const signUpPatientController = async (req: Request, res: Response) => {
     res.status(201).json({ message: "Patient registered", token, user });
     console.log("Patient Registered:\n", JSON.stringify(user));
   } catch (error: any) {
-    console.error(error.message);
-    return res.status(500).json({ error: error.message });
+    console.log("Is AppError:", error instanceof AppError);
+    console.log("Error name:", error.constructor.name);
+    console.log("Error message:", error.message);
+    const status = error instanceof AppError ? error.statusCode : 500;
+    const message =
+      error instanceof AppError ? error.message : "Internal server error";
+    return res.status(status).json({ error: message });
   }
 };
 
@@ -94,8 +99,12 @@ export const patientAccountController = async (req: Request, res: Response) => {
     res.status(200).json({ message: "Patient profile fetched", user });
     console.log("Patient profile fetched:\n", JSON.stringify(user));
   } catch (error: any) {
-    console.error(error.message);
-    return res.status(400).json({ error: error.message });
+    console.log("Is AppError:", error instanceof AppError);
+    console.log("Error name:", error.constructor.name);
+    console.log("Error message:", error.message);
+    const status = error instanceof AppError ? error.statusCode : 400;
+    const message = error instanceof AppError ? error.message : "Bad request";
+    return res.status(status).json({ error: message });
   }
 };
 
@@ -133,8 +142,12 @@ export const resetPasswordController = async (req: Request, res: Response) => {
     });
     console.log(`Email: ${reciepient}\nNew password: ${password}`);
   } catch (error: any) {
-    console.error(error.message);
-    return res.status(400).json({ error: error.message });
+    console.log("Is AppError:", error instanceof AppError);
+    console.log("Error name:", error.constructor.name);
+    console.log("Error message:", error.message);
+    const status = error instanceof AppError ? error.statusCode : 400;
+    const message = error instanceof AppError ? error.message : "Bad request";
+    return res.status(status).json({ error: message });
   }
 };
 
@@ -182,8 +195,13 @@ export const changePasswordController = async (req: Request, res: Response) => {
     });
     console.log("Password change/update successful");
   } catch (error: any) {
-    console.error(error.message);
-    return res.status(500).json({ error: error.message });
+    console.log("Is AppError:", error instanceof AppError);
+    console.log("Error name:", error.constructor.name);
+    console.log("Error message:", error.message);
+    const status = error instanceof AppError ? error.statusCode : 500;
+    const message =
+      error instanceof AppError ? error.message : "Internal server error";
+    return res.status(status).json({ error: message });
   }
 };
 
@@ -225,8 +243,13 @@ export const updatePatientController = async (req: Request, res: Response) => {
       `Updated patient allergies and health issues:\n${JSON.stringify(allergies)}\n${JSON.stringify(healthIssues)}`,
     );
   } catch (error: any) {
-    console.error(error.message);
-    return res.status(500).json({ error: error.message });
+    console.log("Is AppError:", error instanceof AppError);
+    console.log("Error name:", error.constructor.name);
+    console.log("Error message:", error.message);
+    const status = error instanceof AppError ? error.statusCode : 500;
+    const message =
+      error instanceof AppError ? error.message : "Internal server error";
+    return res.status(status).json({ error: message });
   }
 };
 
@@ -256,7 +279,11 @@ export const deletePatientController = async (req: Request, res: Response) => {
       `Patient - ${name} with email:${email} account deletion successful`,
     );
   } catch (error: any) {
-    console.error(error.message);
-    return res.status(400).json({ error: error.message });
+    console.log("Is AppError:", error instanceof AppError);
+    console.log("Error name:", error.constructor.name);
+    console.log("Error message:", error.message);
+    const status = error instanceof AppError ? error.statusCode : 400;
+    const message = error instanceof AppError ? error.message : "Bad request";
+    return res.status(status).json({ error: message });
   }
 };

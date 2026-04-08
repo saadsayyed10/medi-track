@@ -29,7 +29,7 @@ export const signUpPatientService = async (data: SignUpType) => {
   });
 
   // Check if patient already exists
-  if (existing) throw new Error("Patient accound already exists");
+  if (existing) throw new AppError("Patient accound already exists", 401);
 
   // Encrypt password
   const hashPassword = await bcryptjs.hash(data.password, 10);
@@ -103,7 +103,7 @@ export const resetPasswordService = async (email: string) => {
   });
 
   // Email should exist in database to reset password
-  if (!existing) throw new Error("Account does not exist");
+  if (!existing) throw new AppError("Account does not exist", 404);
 
   // Converting UUID to a 10 character password
   const newPassword = v4().slice(0, 10);
@@ -145,7 +145,8 @@ export const changePasswordService = async (
   );
 
   // Check if current password is incorrect
-  if (!isValidPassword) throw new Error("Current password is incorrect");
+  if (!isValidPassword)
+    throw new AppError("Current password is incorrect", 400);
 
   const hashPassword = await bcryptjs.hash(data.newPassword, 10);
 
