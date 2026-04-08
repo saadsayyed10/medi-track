@@ -6,6 +6,9 @@ import { Request, Response } from "express";
 // Import all patient services bundled in one instance
 import * as patientService from "../services/user.service";
 
+// Import error middleware class
+import { AppError } from "../../middleware/error.middleware";
+
 /*
 Register Patient account controller
 Method: POST
@@ -59,8 +62,10 @@ export const signInPatientController = async (req: Request, res: Response) => {
     res.status(200).json({ message: "Patient logged in", token, user });
     console.log("Patient logged in:\n", JSON.stringify(user));
   } catch (error: any) {
-    console.error(error.message);
-    return res.status(500).json({ error: error.message });
+    const status = error instanceof AppError ? error.statusCode : 500;
+    const message =
+      error instanceof AppError ? error.message : "Internal server error";
+    return res.status(status).json({ error: message });
   }
 };
 

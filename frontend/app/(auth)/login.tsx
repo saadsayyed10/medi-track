@@ -1,3 +1,6 @@
+import { loginUserAPI } from "@/api/auth.api";
+import { useAuth } from "@/hooks/useAuth";
+import { useState } from "react";
 import {
   View,
   Text,
@@ -5,9 +8,43 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  ActivityIndicator,
 } from "react-native";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+  const { setAuth, hydrate } = useAuth();
+
+  const handleLogin = async () => {
+    setLoading(true);
+    if (!password) {
+      alert("Password is required to login");
+      return;
+    }
+    if (!email) {
+      alert("Email is required to login");
+      return;
+    }
+    try {
+      const res = await loginUserAPI({ email, password });
+      const { token, user } = res.data;
+      setAuth(token, user);
+
+      setEmail("");
+      setPassword("");
+    } catch (error: any) {
+      const message = error.response?.data?.error ?? error.message;
+      alert(message);
+    } finally {
+      setLoading(false);
+      hydrate();
+    }
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View className="flex-1 justify-center items-center w-full bg-neutral-100 p-6">
@@ -24,6 +61,8 @@ const Login = () => {
                 placeholder="patient@track.medi"
                 keyboardType="email-address"
                 className="w-full"
+                value={email}
+                onChangeText={setEmail}
               />
             </View>
           </View>
@@ -41,14 +80,24 @@ const Login = () => {
                 keyboardType="visible-password"
                 placeholder="**************"
                 className="w-full"
+                value={password}
+                onChangeText={setPassword}
               />
             </View>
           </View>
           <View className="flex justify-center items-center w-full mt-10">
-            <TouchableOpacity className="px-8 py-4 rounded-full bg-green-700 shadow w-full">
-              <Text className="text-neutral-100 text-center font-semibold text-lg">
-                Login
-              </Text>
+            <TouchableOpacity
+              onPress={handleLogin}
+              disabled={loading}
+              className="px-8 py-4 rounded-full bg-green-700 shadow w-full"
+            >
+              {loading ? (
+                <ActivityIndicator className="text-center" />
+              ) : (
+                <Text className="text-neutral-100 text-center font-semibold text-lg">
+                  Login
+                </Text>
+              )}
             </TouchableOpacity>
           </View>
         </View>
