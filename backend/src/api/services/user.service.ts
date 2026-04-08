@@ -29,7 +29,7 @@ export const signUpPatientService = async (data: SignUpType) => {
   });
 
   // Check if patient already exists
-  if (existing) throw new AppError("Patient accound already exists", 401);
+  if (existing) throw new AppError("Patient account already exists", 401);
 
   // Encrypt password
   const hashPassword = await bcryptjs.hash(data.password, 10);
@@ -61,7 +61,7 @@ export const signInPatientService = async (data: SignInType) => {
   });
 
   // Check if patient doesn't exist
-  if (!user) throw new AppError("Patient accound does not exist", 404);
+  if (!user) throw new AppError("Patient account does not exist", 404);
 
   const isValidPassword = await bcryptjs.compare(data.password, user.password);
 

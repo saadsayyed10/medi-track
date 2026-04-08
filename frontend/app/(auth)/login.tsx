@@ -56,7 +56,7 @@ const Login = () => {
               <Text className="uppercase font-medium text-sm tracking-wide">
                 Email
               </Text>
-              <View /> {/* Left for proper alignment of text */}
+              <View />
             </View>
             <View className="flex justify-start items-start bg-neutral-100 w-full px-2 py-1 rounded-lg shadow">
               <TextInput
