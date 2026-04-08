@@ -17,6 +17,9 @@ import {
 import { generateToken } from "../../lib/token";
 import { resetMail } from "../../mails/passwords.mail.";
 
+// Import error middleware class
+import { AppError } from "../../middleware/error.middleware";
+
 /* Register Patient account service */
 export const signUpPatientService = async (data: SignUpType) => {
   const existing = await prisma.patient.findUnique({
@@ -58,12 +61,12 @@ export const signInPatientService = async (data: SignInType) => {
   });
 
   // Check if patient doesn't exist
-  if (!user) throw new Error("Patient accound does not exist");
+  if (!user) throw new AppError("Patient accound does not exist", 404);
 
   const isValidPassword = await bcryptjs.compare(data.password, user.password);
 
   // Check if password is incorrect
-  if (!isValidPassword) throw new Error("Password is incorrect");
+  if (!isValidPassword) throw new AppError("Password is incorrect", 401);
 
   // Generate and assign token to the patient account
   const token = generateToken(user.id);
