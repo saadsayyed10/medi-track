@@ -62,6 +62,9 @@ export const signInPatientController = async (req: Request, res: Response) => {
     res.status(200).json({ message: "Patient logged in", token, user });
     console.log("Patient logged in:\n", JSON.stringify(user));
   } catch (error: any) {
+    console.log("Is AppError:", error instanceof AppError);
+    console.log("Error name:", error.constructor.name);
+    console.log("Error message:", error.message);
     const status = error instanceof AppError ? error.statusCode : 500;
     const message =
       error instanceof AppError ? error.message : "Internal server error";

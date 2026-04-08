@@ -36,9 +36,11 @@ const Login = () => {
 
       setEmail("");
       setPassword("");
+      alert("Logged in");
     } catch (error: any) {
-      const message = error.response?.data?.error ?? error.message;
-      alert(message);
+      console.log("Status:", error.response?.status);
+      console.log("Data:", JSON.stringify(error.response?.data));
+      console.log("Message:", error.message);
     } finally {
       setLoading(false);
       hydrate();
