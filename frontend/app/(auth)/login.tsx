@@ -47,7 +47,7 @@ const Login = () => {
 
       setEmail("");
       setPassword("");
-      router.replace("/");
+      router.push("/");
     } catch (error: any) {
       const message = error.response?.data?.error ?? error.message;
       setError(message);
@@ -70,7 +70,7 @@ const Login = () => {
             </View>
             <View className="flex justify-start items-start   bg-neutral-100 w-full px-2 py-1 rounded-lg shadow">
               <TextInput
-                placeholder="patient@track.medi"
+                placeholder="patient@meditrack.com"
                 keyboardType="email-address"
                 className="w-full"
                 value={email}
@@ -122,7 +122,14 @@ const Login = () => {
         </View>
         <View className="flex justify-center items-center w-full flex-row gap-x-1 absolute bottom-16">
           <Text className="text-sm">Don't have an account?</Text>
-          <Text className="font-medium text-sm text-green-700">Sign Up</Text>
+          <Text
+            onPress={() => {
+              router.replace("/sign-up/basic-details");
+            }}
+            className="font-medium text-sm text-green-700"
+          >
+            Sign Up
+          </Text>
         </View>
       </View>
     </TouchableWithoutFeedback>

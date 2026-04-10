@@ -11,7 +11,7 @@ export default function Index() {
   const handleLogout = async () => {
     await logout();
     await hydrate();
-    router.replace("/login");
+    router.push("/login");
   };
 
   useEffect(() => {
