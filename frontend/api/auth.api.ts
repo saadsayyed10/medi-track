@@ -1,4 +1,4 @@
-import { LoginUser } from "@/types/user.types";
+import { type LoginUser } from "@/types/user.types";
 import axios from "axios";
 import { serverURL } from "./apiUrl";
 
