@@ -1,5 +1,7 @@
+import { registerUserAPI } from "@/api/auth.api";
+import { useAuth } from "@/hooks/useAuth";
 import { useSignUp } from "@/hooks/useSignUp";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useState } from "react";
 import {
   View,
@@ -10,10 +12,67 @@ import {
 } from "react-native";
 
 const SetPassword = () => {
-  const { password, setPassword, reset } = useSignUp();
+  const {
+    name,
+    email,
+    password,
+    setPassword,
+    age,
+    allergy,
+    allergyKeywords,
+    healthIssue,
+    healthIssueKeywords,
+    reset,
+  } = useSignUp();
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
+
+  const { setAuth, hydrate } = useAuth();
+
+  const router = useRouter();
+
+  const handleRegister = async () => {
+    if (!password || !confirmPassword) {
+      alert("Password or confirm password is required to sign up");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Password and Confirm password should be matched");
+      return;
+    }
+
+    if (password.length < 8) {
+      alert("Password should contain more than 8 characters");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await registerUserAPI({
+        name,
+        email,
+        password: password.trim(),
+        age,
+        allergies: allergy,
+        allergiesKeywords: allergyKeywords,
+        healthIssues: healthIssue,
+        healthIssuesKeywords: healthIssueKeywords,
+      });
+
+      const { token, user } = res.data;
+      await setAuth(token, user);
+
+      router.replace("/");
+    } catch (error: any) {
+      alert(error.response?.data?.error ?? error.message);
+    } finally {
+      setLoading(false);
+      hydrate();
+      reset();
+    }
+  };
 
   return (
     <View className="flex-1 justify-between flex-col items-center w-full p-6">
@@ -73,7 +132,10 @@ const SetPassword = () => {
         </View>
       </View>
       <View className="flex justify-center items-center flex-col gap-y-4 w-full mb-10">
-        <TouchableOpacity className="px-8 py-4 rounded-full bg-green-700 shadow w-full">
+        <TouchableOpacity
+          onPress={handleRegister}
+          className="px-8 py-4 rounded-full bg-green-700 shadow w-full"
+        >
           {loading ? (
             <ActivityIndicator color={"white"} className="text-center" />
           ) : (

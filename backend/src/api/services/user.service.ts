@@ -44,7 +44,7 @@ export const signUpPatientService = async (data: SignUpType) => {
       allergy_keywords: data.allergiesKeywords,
       health_issues: data.healthIssues,
       health_issues_keywords: data.healthIssuesKeywords,
-      password: data.password,
+      password: hashPassword,
     },
   });
 

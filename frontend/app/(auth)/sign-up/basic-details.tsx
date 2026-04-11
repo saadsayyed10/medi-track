@@ -18,6 +18,19 @@ const BasicDetails = () => {
   const router = useRouter();
 
   const handleBasicDetails = () => {
+    if (!name) {
+      alert("Name is required to sign up");
+      return;
+    }
+    if (!email) {
+      alert("Email is required to sign up");
+      return;
+    }
+    if (!age) {
+      alert("Age is required to sign up");
+      return;
+    }
+
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -89,6 +102,7 @@ const BasicDetails = () => {
                 <TextInput
                   value={age!}
                   onChangeText={setAge}
+                  keyboardType="numeric"
                   placeholder="22"
                   className="w-full"
                 />
@@ -102,7 +116,7 @@ const BasicDetails = () => {
             className="px-8 py-4 rounded-full bg-green-700 shadow w-full"
           >
             {loading ? (
-              <ActivityIndicator className="text-center" />
+              <ActivityIndicator color={"white"} className="text-center" />
             ) : (
               <Text className="text-neutral-100 text-center font-semibold text-lg">
                 Continue
