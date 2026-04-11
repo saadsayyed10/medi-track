@@ -1,4 +1,4 @@
 export type SummarizeHealthIssue = {
-  name: string;
+  name: string | null;
   healthIssue: string;
 };

@@ -3,7 +3,7 @@ import { create } from "zustand";
 interface SignUpState {
   name: string | null;
   email: string | null;
-  age: number | null;
+  age: string | null;
   healthIssue: string | null;
   healthIssueKeywords: string[] | null;
   allergy: string | null;
@@ -12,7 +12,7 @@ interface SignUpState {
 
   setName: (name: string) => void;
   setEmail: (email: string) => void;
-  setAge: (age: number) => void;
+  setAge: (age: string) => void;
   setHealthIssue: (healthIssue: string) => void;
   setHealthIssueKeywords: (healthIssueKeywords: string[]) => void;
   setAllergy: (allergy: string) => void;
