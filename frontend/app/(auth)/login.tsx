@@ -1,6 +1,9 @@
+// frontend/app/(auth)/login.tsx
+
 import { loginUserAPI } from "@/api/auth.api";
 import { useAuth } from "@/hooks/useAuth";
-import { useState } from "react";
+import { useRouter } from "expo-router";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -16,8 +19,15 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const { setAuth, hydrate } = useAuth();
+
+  useEffect(() => {
+    hydrate();
+  }, [hydrate]);
+
+  const router = useRouter();
 
   const handleLogin = async () => {
     if (!password) {
@@ -37,10 +47,10 @@ const Login = () => {
 
       setEmail("");
       setPassword("");
-      alert("Logged in");
+      router.push("/");
     } catch (error: any) {
       const message = error.response?.data?.error ?? error.message;
-      alert(message);
+      setError(message);
     } finally {
       setLoading(false);
       hydrate();
@@ -58,9 +68,9 @@ const Login = () => {
               </Text>
               <View />
             </View>
-            <View className="flex justify-start items-start bg-neutral-100 w-full px-2 py-1 rounded-lg shadow">
+            <View className="flex justify-start items-start   bg-neutral-100 w-full px-2 py-1 rounded-lg shadow">
               <TextInput
-                placeholder="patient@track.medi"
+                placeholder="patient@meditrack.com"
                 keyboardType="email-address"
                 className="w-full"
                 value={email}
@@ -87,6 +97,13 @@ const Login = () => {
               />
             </View>
           </View>
+          <View
+            className={`${error ? "flex" : "hidden"} justify-start items-start w-full`}
+          >
+            <Text className="text-red-500 font-semibold text-sm tracking-wide">
+              {error}
+            </Text>
+          </View>
           <View className="flex justify-center items-center w-full mt-10">
             <TouchableOpacity
               onPress={handleLogin}
@@ -103,9 +120,16 @@ const Login = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <View className="flex justify-center items-center w-full flex-row gap-x-1 absolute bottom-14">
+        <View className="flex justify-center items-center w-full flex-row gap-x-1 absolute bottom-16">
           <Text className="text-sm">Don't have an account?</Text>
-          <Text className="font-medium text-sm text-green-700">Sign Up</Text>
+          <Text
+            onPress={() => {
+              router.replace("/sign-up/basic-details");
+            }}
+            className="font-medium text-sm text-green-700"
+          >
+            Sign Up
+          </Text>
         </View>
       </View>
     </TouchableWithoutFeedback>

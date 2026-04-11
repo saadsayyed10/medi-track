@@ -41,8 +41,10 @@ export const signUpPatientService = async (data: SignUpType) => {
       email: data.email,
       age: data.age,
       allergies: data.allergies,
+      allergy_keywords: data.allergiesKeywords,
       health_issues: data.healthIssues,
-      password: hashPassword,
+      health_issues_keywords: data.healthIssuesKeywords,
+      password: data.password,
     },
   });
 
@@ -171,8 +173,8 @@ export const updatePatientService = async (
       id: userId,
     },
     data: {
-      allergies: data.allergies,
-      health_issues: data.healthIssues,
+      allergy_keywords: data.allergies,
+      health_issues_keywords: data.healthIssues,
     },
   });
 

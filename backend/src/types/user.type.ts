@@ -12,9 +12,11 @@ export type SignUpType = {
   name: string;
   email: string;
   password: string;
-  age: number;
-  allergies: string[];
-  healthIssues: string[];
+  age: string;
+  allergies: string;
+  allergiesKeywords: string[];
+  healthIssues: string;
+  healthIssuesKeywords: string[];
 };
 
 // Used in backend/src/api/services/user.service.ts
