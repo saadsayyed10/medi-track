@@ -89,6 +89,7 @@ const BasicDetails = () => {
                 <TextInput
                   value={age!}
                   onChangeText={setAge}
+                  keyboardType="numeric"
                   placeholder="22"
                   className="w-full"
                 />

@@ -4,12 +4,12 @@ export type LoginUser = {
 };
 
 export type RegisterUser = {
-  name: string;
-  email: string;
-  password: string;
-  age: string;
-  allergies: string;
-  allergiesKeywords: string[];
-  healthIssues: string;
-  healthIssuesKeywords: string[];
+  name: string | null;
+  email: string | null;
+  password: string | null;
+  age: string | null;
+  allergies: string | null;
+  allergiesKeywords: string[] | null;
+  healthIssues: string | null;
+  healthIssuesKeywords: string[] | null;
 };
