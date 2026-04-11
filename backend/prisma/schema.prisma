@@ -12,7 +12,7 @@ model patient {
   name                   String
   email                  String   @unique
   password               String
-  age                    Int
+  age                    String
   allergies              String
   allergy_keywords       String[]
   health_issues          String?

@@ -15,8 +15,26 @@ Method: POST
 Endpoint: /api/users/register
 */
 export const signUpPatientController = async (req: Request, res: Response) => {
-  const { name, email, age, allergies, healthIssues, password } = req.body;
-  const data = { name, email, age, allergies, healthIssues, password };
+  const {
+    name,
+    email,
+    password,
+    age,
+    allergies,
+    allergiesKeywords,
+    healthIssues,
+    healthIssuesKeywords,
+  } = req.body;
+  const data = {
+    name,
+    email,
+    password,
+    age,
+    allergies,
+    allergiesKeywords,
+    healthIssues,
+    healthIssuesKeywords,
+  };
 
   // Inputs cannot be left null
   if (!data) {
