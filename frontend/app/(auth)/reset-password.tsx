@@ -71,7 +71,7 @@ const ResetPassword = () => {
         </View>
         {error && (
           <Text className="text-sm font-semibold tracking-wide text-red-500 mt-2">
-            {error}
+            {error}.
           </Text>
         )}
       </View>
