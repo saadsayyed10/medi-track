@@ -11,5 +11,5 @@ export const registerUserAPI = async (data: RegisterUser) => {
 };
 
 export const resetPasswordAPI = async (email: string) => {
-  return await axios.patch(`${serverURL}/users/reset-password`, email);
+  return await axios.patch(`${serverURL}/users/reset-password`, { email });
 };

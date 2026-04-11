@@ -63,6 +63,7 @@ const SetPassword = () => {
 
       const { token, user } = res.data;
       await setAuth(token, user);
+      reset();
 
       router.replace("/");
     } catch (error: any) {
@@ -70,7 +71,6 @@ const SetPassword = () => {
     } finally {
       setLoading(false);
       hydrate();
-      reset();
     }
   };
 
