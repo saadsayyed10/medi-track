@@ -11,7 +11,6 @@ export const rateLimiter = (option: RateLimitType) => {
     windowMs: option.windowMs, // Time to cap a limit
     max: option.max, // Number of times to hit an API
     message: option.message, // Message to show after limits are exceeded
-    keyGenerator: option.keyGenerator, // Rate limit per email
   });
 
   return limiter;

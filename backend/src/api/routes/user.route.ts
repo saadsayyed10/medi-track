@@ -24,11 +24,7 @@ userRouter.get(
 );
 
 // Route to reset patient's forgotten account password (token needed)
-userRouter.patch(
-  "/reset-password",
-  resetPasswordEmailLimiter,
-  userController.resetPasswordController,
-);
+userRouter.patch("/reset-password", userController.resetPasswordController);
 
 // Route to change patient's account password (token needed)
 userRouter.put(
