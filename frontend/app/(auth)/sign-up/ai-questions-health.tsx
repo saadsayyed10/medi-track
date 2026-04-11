@@ -40,10 +40,7 @@ const AIQuestionsHealth = () => {
         <View className="flex justify-between items-start w-full">
           <View />
           <View className="w-64 h-min bg-green-700 shadow px-8 py-4 rounded-lg flex justify-start items-start">
-            <Text className="text-neutral-200 font-semibold text-sm">
-              Hello! To ensure your safety, could you please list any known
-              chronic health issues you may have?
-            </Text>
+            <Text className="text-neutral-200 font-semibold text-sm">...</Text>
           </View>
         </View>
         {enableAIResponse && (
