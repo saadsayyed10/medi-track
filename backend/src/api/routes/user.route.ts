@@ -27,7 +27,6 @@ userRouter.get(
 userRouter.patch(
   "/reset-password",
   resetPasswordEmailLimiter,
-  protectAuth,
   userController.resetPasswordController,
 );
 
