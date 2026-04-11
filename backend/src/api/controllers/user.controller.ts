@@ -143,14 +143,6 @@ export const resetPasswordController = async (req: Request, res: Response) => {
   }
 
   try {
-    // If user is not authorized, abort request
-    if (!(req as any).user!) {
-      console.log("Unauthorized: Cannot fetch as token is not provided");
-      return res
-        .status(401)
-        .json({ error: "Unauthorized: Cannot fetch as token is not provided" });
-    }
-
     const { reciepient, password } =
       await patientService.resetPasswordService(email);
     res.status(200).json({
