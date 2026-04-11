@@ -1,3 +1,4 @@
+import { useSignUp } from "@/hooks/useSignUp";
 import { Link } from "expo-router";
 import { useState } from "react";
 import {
@@ -9,6 +10,9 @@ import {
 } from "react-native";
 
 const SetPassword = () => {
+  const { password, setPassword, reset } = useSignUp();
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   return (
@@ -42,7 +46,12 @@ const SetPassword = () => {
               <View />
             </View>
             <View className="flex justify-start items-start bg-neutral-200 w-full px-2 py-1 rounded-lg shadow">
-              <TextInput placeholder="******************" className="w-full" />
+              <TextInput
+                value={password!}
+                onChangeText={setPassword}
+                placeholder="******************"
+                className="w-full"
+              />
             </View>
           </View>
           <View className="flex justify-start items-start gap-y-2 w-full">
@@ -53,7 +62,12 @@ const SetPassword = () => {
               <View />
             </View>
             <View className="flex justify-start items-start bg-neutral-200 w-full px-2 py-1 rounded-lg shadow">
-              <TextInput placeholder="******************" className="w-full" />
+              <TextInput
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                placeholder="******************"
+                className="w-full"
+              />
             </View>
           </View>
         </View>
@@ -61,7 +75,7 @@ const SetPassword = () => {
       <View className="flex justify-center items-center flex-col gap-y-4 w-full mb-10">
         <TouchableOpacity className="px-8 py-4 rounded-full bg-green-700 shadow w-full">
           {loading ? (
-            <ActivityIndicator className="text-center" />
+            <ActivityIndicator color={"white"} className="text-center" />
           ) : (
             <Text className="text-neutral-100 text-center font-semibold text-lg">
               Create Account
