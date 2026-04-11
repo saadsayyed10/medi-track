@@ -11,12 +11,11 @@ import {
 } from "react-native";
 import { ArrowRight } from "lucide-react-native";
 import { useSignUp } from "@/hooks/useSignUp";
-import { summarizeHealthIssueAPI } from "@/api/ai-agent.api";
+import { summarizeAllergiesAPI } from "@/api/ai-agent.api";
 
 const AIQuestionsHealth = () => {
-  const { healthIssue, setHealthIssue, setHealthIssueKeywords, name } =
-    useSignUp();
-  const [healthIssueProblem, setHealthIssueProblem] = useState("");
+  const { allergy, setAllergy, setAllergyKeywords, name } = useSignUp();
+  const [allergyProblem, setAllergyProblem] = useState("");
 
   const [loading, setLoading] = useState(false);
 
@@ -26,23 +25,23 @@ const AIQuestionsHealth = () => {
 
   const router = useRouter();
 
-  const handleHealthIssueAISummarize = async () => {
-    if (!healthIssueProblem) {
+  const handleAllergyAISummarize = async () => {
+    if (!allergyProblem) {
       alert(
-        "If you don't have any health issues, please specifically mention that you dont possess any.",
+        "If you don't have any allergies, please specifically mention that you dont possess any.",
       );
       return;
     }
 
     setLoading(true);
     try {
-      const res = await summarizeHealthIssueAPI({
-        healthIssue: healthIssueProblem,
+      const res = await summarizeAllergiesAPI({
+        allergies: allergyProblem,
         name,
       });
       const { summarization, keywords } = res.data;
-      setHealthIssue(summarization);
-      setHealthIssueKeywords(keywords);
+      setAllergy(summarization);
+      setAllergyKeywords(keywords);
 
       setEnableAIResponse(true);
       setEnableInput(false);
@@ -54,11 +53,11 @@ const AIQuestionsHealth = () => {
     }
   };
 
-  const handleAIHealthQuestions = () => {
+  const handleAIAllergyQuestions = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      router.push("/(auth)/sign-up/ai-questions-allergy");
+      router.push("/(auth)/sign-up/set-password");
     }, 2000);
   };
 
@@ -77,8 +76,8 @@ const AIQuestionsHealth = () => {
             <View />
             <View className="w-64 h-min bg-neutral-200 shadow px-8 py-4 rounded-lg flex justify-start items-start">
               <Text className="text-neutral-800 font-semibold text-sm">
-                Hello! To ensure your safety, could you please list any known
-                chronic health issues you may have?
+                Additionally, could you please also list any known drug or
+                environmental allergies you may have?
               </Text>
             </View>
           </View>
@@ -86,7 +85,7 @@ const AIQuestionsHealth = () => {
             <View />
             <View className="w-64 h-min bg-green-700 shadow px-8 py-4 rounded-lg flex justify-start items-start">
               <Text className="text-neutral-200 font-semibold text-sm">
-                {healthIssueProblem ? healthIssueProblem : "..."}
+                {allergyProblem ? allergyProblem : "..."}
               </Text>
             </View>
           </View>
@@ -95,7 +94,7 @@ const AIQuestionsHealth = () => {
               <View />
               <View className="w-64 h-min bg-neutral-200 shadow px-8 py-4 rounded-lg flex justify-start items-start">
                 <Text className="text-neutral-800 font-semibold text-sm">
-                  {healthIssue}
+                  {allergy}
                 </Text>
               </View>
             </View>
@@ -104,7 +103,7 @@ const AIQuestionsHealth = () => {
         <View className="flex justify-center items-center flex-col gap-y-4 w-full mb-10">
           {enableButton && (
             <TouchableOpacity
-              onPress={handleAIHealthQuestions}
+              onPress={handleAIAllergyQuestions}
               className="px-8 py-4 rounded-full bg-green-700 shadow w-full"
             >
               {loading ? (
@@ -121,14 +120,14 @@ const AIQuestionsHealth = () => {
             <View className="flex justify-start items-center w-full flex-row gap-x-2">
               <View className="flex justify-start items-start bg-neutral-200 px-2 py-1 rounded shadow w-[85%]">
                 <TextInput
-                  value={healthIssueProblem}
-                  onChangeText={setHealthIssueProblem}
+                  value={allergyProblem}
+                  onChangeText={setAllergyProblem}
                   placeholder="Type your response here..."
                   className="w-full"
                 />
               </View>
               <TouchableOpacity
-                onPress={handleHealthIssueAISummarize}
+                onPress={handleAllergyAISummarize}
                 className="px-2 py-4 rounded shadow w-[15%] bg-green-700 flex justify-center items-center"
               >
                 {loading ? (
