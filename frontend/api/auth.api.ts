@@ -9,3 +9,7 @@ export const loginUserAPI = async (data: LoginUser) => {
 export const registerUserAPI = async (data: RegisterUser) => {
   return await axios.post(`${serverURL}/users/register`, data);
 };
+
+export const resetPasswordAPI = async (email: string) => {
+  return await axios.patch(`${serverURL}/users/reset-password`, { email });
+};
