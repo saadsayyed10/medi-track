@@ -18,6 +18,19 @@ const BasicDetails = () => {
   const router = useRouter();
 
   const handleBasicDetails = () => {
+    if (!name) {
+      alert("Name is required to sign up");
+      return;
+    }
+    if (!email) {
+      alert("Email is required to sign up");
+      return;
+    }
+    if (!age) {
+      alert("Age is required to sign up");
+      return;
+    }
+
     setLoading(true);
     setTimeout(() => {
       setLoading(false);

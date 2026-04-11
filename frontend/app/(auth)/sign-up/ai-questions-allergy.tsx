@@ -100,7 +100,7 @@ const AIQuestionsHealth = () => {
             </View>
           )}
         </View>
-        <View className="flex justify-center items-center flex-col gap-y-4 w-full mb-10">
+        <View className="flex justify-center items-center flex-col gap-y-4 w-full mb-10 mt-20">
           {enableButton && (
             <TouchableOpacity
               onPress={handleAIAllergyQuestions}
