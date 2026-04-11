@@ -2,7 +2,7 @@
 
 import { loginUserAPI } from "@/api/auth.api";
 import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   View,
@@ -83,9 +83,11 @@ const Login = () => {
               <Text className="uppercase font-medium text-sm tracking-wide">
                 Password
               </Text>
-              <Text className="text-xs text-green-700 font-medium">
-                Forgot Password?
-              </Text>
+              <Link href={"/(auth)/reset-password"}>
+                <Text className="text-xs text-green-700 font-medium">
+                  Forgot Password?
+                </Text>
+              </Link>
             </View>
             <View className="flex justify-start items-start bg-neutral-100 w-full px-2 py-1 rounded-lg shadow">
               <TextInput
