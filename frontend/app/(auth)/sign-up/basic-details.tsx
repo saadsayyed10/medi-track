@@ -103,7 +103,7 @@ const BasicDetails = () => {
             className="px-8 py-4 rounded-full bg-green-700 shadow w-full"
           >
             {loading ? (
-              <ActivityIndicator className="text-center" />
+              <ActivityIndicator color={"white"} className="text-center" />
             ) : (
               <Text className="text-neutral-100 text-center font-semibold text-lg">
                 Continue

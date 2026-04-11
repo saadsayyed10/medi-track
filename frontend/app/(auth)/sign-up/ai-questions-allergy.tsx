@@ -107,7 +107,7 @@ const AIQuestionsHealth = () => {
               className="px-8 py-4 rounded-full bg-green-700 shadow w-full"
             >
               {loading ? (
-                <ActivityIndicator className="text-center" />
+                <ActivityIndicator color={"white"} className="text-center" />
               ) : (
                 <Text className="text-neutral-100 text-center font-semibold text-lg">
                   Next
@@ -131,7 +131,7 @@ const AIQuestionsHealth = () => {
                 className="px-2 py-4 rounded shadow w-[15%] bg-green-700 flex justify-center items-center"
               >
                 {loading ? (
-                  <ActivityIndicator />
+                  <ActivityIndicator color={"white"} />
                 ) : (
                   <ArrowRight color={"white"} />
                 )}

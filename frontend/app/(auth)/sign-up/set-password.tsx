@@ -43,12 +43,17 @@ const SetPassword = () => {
       return;
     }
 
+    if (password.length < 8) {
+      alert("Password should contain more than 8 characters");
+      return;
+    }
+
     setLoading(true);
     try {
       const res = await registerUserAPI({
         name,
         email,
-        password,
+        password: password.trim(),
         age,
         allergies: allergy,
         allergiesKeywords: allergyKeywords,
