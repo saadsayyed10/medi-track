@@ -1,10 +1,14 @@
+import { deleteAPI } from "@/api/user.api";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "expo-router";
 import { ChevronRight } from "lucide-react-native";
+import { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
 const Settings = () => {
-  const { logout, hydrate, user } = useAuth();
+  const [loading, setLoading] = useState(false);
+
+  const { logout, hydrate, user, token } = useAuth();
 
   const router = useRouter();
 
@@ -12,6 +16,22 @@ const Settings = () => {
     await logout();
     await hydrate();
     router.push("/login");
+  };
+
+  const handleDelete = async () => {
+    setLoading(false);
+    try {
+      await deleteAPI(token!);
+      alert("Your account is now deleted permanently.");
+      await logout();
+      router.replace("/");
+    } catch (error: any) {
+      const message = error?.response?.data?.error ?? error?.message;
+      alert(message);
+    } finally {
+      setLoading(true);
+      hydrate();
+    }
   };
 
   return (
@@ -48,7 +68,10 @@ const Settings = () => {
         <Text className="font-bold text-xs uppercase text-red-500 tracking-wider">
           Danger Zone
         </Text>
-        <TouchableOpacity className="flex justify-between items-start w-full px-3 py-5 shadow rounded-md bg-white flex-row mt-1 border border-neutral-200">
+        <TouchableOpacity
+          onPress={handleDelete}
+          className="flex justify-between items-start w-full px-3 py-5 shadow rounded-md bg-white flex-row mt-1 border border-neutral-200"
+        >
           <Text className="font-medium text-base capitalize text-red-600 tracking-wider">
             Delete Account
           </Text>
