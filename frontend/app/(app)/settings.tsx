@@ -57,6 +57,18 @@ const Settings = () => {
           </Text>
           <ChevronRight width={20} height={20} color={"lightgray"} />
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={async () => {
+            await logout();
+            router.replace("/(auth)/reset-password");
+          }}
+          className="flex justify-between items-start w-full px-3 py-5 shadow rounded-md bg-white flex-row mt-1 border border-neutral-200"
+        >
+          <Text className="font-medium text-base capitalize text-neutral-700 tracking-wider">
+            Forgot Password
+          </Text>
+          <ChevronRight width={20} height={20} color={"lightgray"} />
+        </TouchableOpacity>
         <TouchableOpacity className="flex justify-between items-start w-full px-3 py-5 shadow rounded-md bg-white flex-row mt-1 border border-neutral-200">
           <Text className="font-medium text-base capitalize text-neutral-700 tracking-wider">
             View and Update Profile
