@@ -29,6 +29,9 @@ export default function Index() {
           Logout
         </Text>
       )}
+      <Link className="mt-20" href={"/(app)/dashboard"}>
+        Dashboard
+      </Link>
     </View>
   );
 }
