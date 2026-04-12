@@ -45,12 +45,10 @@ const ResetPassword = () => {
     <View className="flex-1 justify-center items-center w-full flex-col gap-y-10 p-6">
       <View className="flex justify-start items-start flex-col gap-y-4">
         <Text className="text-4xl font-bold text-neutral-800 capitalize">
-          Reset Password
+          Password Recovery
         </Text>
         <Text className="text-neutral-400 font-medium text-base">
-          If your account exists and you have forgotten your password, we will
-          reset it and send the new password to your registered email address.
-          You may update it at any time through your account settings.
+          Enter your existing email address to receive a temporary password.
         </Text>
       </View>
       <View className="flex justify-start items-start gap-y-2 w-full mb-32">
