@@ -9,41 +9,56 @@ import React, { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { resetPasswordAPI } from "@/api/auth.api";
 import { useRouter } from "expo-router";
+import { changePasswordAPI } from "@/api/user.api";
 
 const ChangePassword = () => {
-  const [email, setEmail] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const { hydrate } = useAuth();
+  const { hydrate, token } = useAuth();
   const router = useRouter();
 
-  const handleResetPassword = async () => {
-    if (!email) {
-      setError("Email is required to reset password");
+  const handleChangePassword = async () => {
+    if (!oldPassword || !newPassword || !confirmNewPassword) {
+      setError("Please do not leave any any fields empty");
       return;
     }
+    if (newPassword !== confirmNewPassword) {
+      setError("New password and confirming password must be matched");
+      return;
+    }
+    if (newPassword.length < 8) {
+      setError("New password length should be more than 8 character");
+      return;
+    }
+
     setLoading(true);
     try {
-      await resetPasswordAPI(email);
+      await changePasswordAPI({ newPassword, oldPassword }, token!);
+      alert("Password update successful.");
 
-      setEmail("");
-      alert("Please check new password sent to your email inbox or spam");
+      setOldPassword("");
+      setNewPassword("");
+      setConfirmNewPassword("");
 
-      router.replace("/(auth)/login");
+      router.push("/(app)/settings");
     } catch (error: any) {
       const message = error.response?.data?.error ?? error.message;
       setError(message);
     } finally {
-      await hydrate();
       setLoading(false);
+
+      hydrate();
     }
   };
 
   return (
-    <View className="flex-1 justify-center items-center w-full flex-col gap-y-10 p-6">
-      <View className="flex justify-start items-start flex-col gap-y-4">
+    <View className="flex-1 justify-start items-center w-full flex-col gap-y-10 p-6">
+      <View className="flex justify-start items-start flex-col gap-y-4 mt-28">
         <Text className="text-4xl font-bold text-neutral-800 capitalize">
           Security Update
         </Text>
@@ -51,20 +66,20 @@ const ChangePassword = () => {
           Ensure your account stays protected by choosing a strong password.
         </Text>
       </View>
-      <View className="flex justify-start items-start gap-y-6 w-full mb-32">
+      <View className="flex justify-start items-start gap-y-6 w-full">
         <View className="flex justify-start items-start gap-y-2 w-full">
           <View className="flex justify-between items-center w-full flex-row">
             <Text className="uppercase font-medium text-sm tracking-wide text-neutral-800">
-              Old Password
+              Current Password
             </Text>
             <View />
           </View>
           <View className="flex justify-start items-start bg-neutral-200 w-full px-2 py-1 rounded-lg shadow">
             <TextInput
-              keyboardType="email-address"
-              value={email}
-              onChangeText={setEmail}
-              placeholder="patient@medi.track"
+              keyboardType="visible-password"
+              value={oldPassword}
+              onChangeText={setOldPassword}
+              placeholder="***********************"
               className="w-full"
             />
           </View>
@@ -78,10 +93,10 @@ const ChangePassword = () => {
           </View>
           <View className="flex justify-start items-start bg-neutral-200 w-full px-2 py-1 rounded-lg shadow">
             <TextInput
-              keyboardType="email-address"
-              value={email}
-              onChangeText={setEmail}
-              placeholder="patient@medi.track"
+              keyboardType="visible-password"
+              value={newPassword}
+              onChangeText={setNewPassword}
+              placeholder="***********************"
               className="w-full"
             />
           </View>
@@ -95,10 +110,10 @@ const ChangePassword = () => {
           </View>
           <View className="flex justify-start items-start bg-neutral-200 w-full px-2 py-1 rounded-lg shadow">
             <TextInput
-              keyboardType="email-address"
-              value={email}
-              onChangeText={setEmail}
-              placeholder="patient@medi.track"
+              keyboardType="visible-password"
+              value={confirmNewPassword}
+              onChangeText={setConfirmNewPassword}
+              placeholder="***********************"
               className="w-full"
             />
           </View>
@@ -111,7 +126,7 @@ const ChangePassword = () => {
       </View>
       <View className="flex absolute bottom-10 justify-center items-center flex-col gap-y-4 w-full mb-10">
         <TouchableOpacity
-          onPress={handleResetPassword}
+          onPress={handleChangePassword}
           className="px-8 py-4 rounded-full bg-green-700 shadow w-full"
         >
           {loading ? (

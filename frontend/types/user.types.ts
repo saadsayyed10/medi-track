@@ -13,3 +13,19 @@ export type RegisterUser = {
   healthIssues: string | null;
   healthIssuesKeywords: string[] | null;
 };
+
+export type ChangePassword = {
+  oldPassword: string;
+  newPassword: string;
+};
+
+export type FetchUser = {
+  id: string;
+  name: string;
+  email: string;
+  age: string;
+  allergies: string;
+  allergiesKeyword: string[];
+  healthIssues: string;
+  healthIssuesKeywords: string[];
+};
