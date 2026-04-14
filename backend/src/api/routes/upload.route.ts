@@ -13,7 +13,7 @@ const uploadRouter = Router();
 
 // Route to upload prescription
 uploadRouter.post(
-  "/upload/prescription",
+  "/prescription",
   protectAuth,
   uploadController.uploadPrescriptionController,
 );
