@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model patient {
+model patients {
   id                     String   @id @default(uuid())
   name                   String
   email                  String   @unique
@@ -17,5 +17,18 @@ model patient {
   allergy_keywords       String[]
   health_issues          String?
   health_issues_keywords String[]
-  created_at             DateTime @default(now())
+
+  prescriptions prescriptions[] // 1-M Relationship with Prescriptions
+
+  created_at DateTime @default(now())
+}
+
+model prescriptions {
+  id             String @id @default(uuid())
+  uploaded_image String
+
+  patients_id String?
+  patients    patients? @relation(fields: [patients_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  created_at DateTime @default(now())
 }
