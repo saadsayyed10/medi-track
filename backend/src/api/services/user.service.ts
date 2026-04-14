@@ -1,7 +1,9 @@
 // backend/src/api/services/user.service.ts
 
-// Import libraries
+// Import ORM instance to communicate with database
 import prisma from "../../lib/prisma.orm";
+
+// Import libraries
 import bcryptjs from "bcryptjs";
 import { v4 } from "uuid";
 
