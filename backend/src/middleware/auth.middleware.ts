@@ -24,7 +24,7 @@ export const protectAuth = async (
 
     const decoded = jwt.verify(token, ENV.JWT_SECRET!) as DecodeTokenType;
 
-    const user = await prisma.patient.findUnique({
+    const user = await prisma.patients.findUnique({
       where: {
         id: decoded.userId,
       },
