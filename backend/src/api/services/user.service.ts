@@ -1,7 +1,9 @@
 // backend/src/api/services/user.service.ts
 
-// Import libraries
+// Import ORM instance to communicate with database
 import prisma from "../../lib/prisma.orm";
+
+// Import libraries
 import bcryptjs from "bcryptjs";
 import { v4 } from "uuid";
 
@@ -15,14 +17,14 @@ import {
 
 // Import helper functions
 import { generateToken } from "../../lib/token";
-import { resetMail } from "../../mails/passwords.mail.";
+import { resetMail } from "../../mails/passwords.mail";
 
 // Import error middleware class
 import { AppError } from "../../middleware/error.middleware";
 
 /* Register Patient account service */
 export const signUpPatientService = async (data: SignUpType) => {
-  const existing = await prisma.patient.findUnique({
+  const existing = await prisma.patients.findUnique({
     where: {
       email: data.email,
     },
@@ -35,7 +37,7 @@ export const signUpPatientService = async (data: SignUpType) => {
   const hashPassword = await bcryptjs.hash(data.password, 10);
 
   // Instance to register user/patient account
-  const user = await prisma.patient.create({
+  const user = await prisma.patients.create({
     data: {
       name: data.name,
       email: data.email,
@@ -56,7 +58,7 @@ export const signUpPatientService = async (data: SignUpType) => {
 
 /* Login Patient account service */
 export const signInPatientService = async (data: SignInType) => {
-  const user = await prisma.patient.findUnique({
+  const user = await prisma.patients.findUnique({
     where: {
       email: data.email,
     },
@@ -79,7 +81,7 @@ export const signInPatientService = async (data: SignInType) => {
 /* Fetch Patient account service */
 export const patientAccountService = async (userId: string) => {
   // Password shouldn't been fetched for profile
-  const user = await prisma.patient.findUnique({
+  const user = await prisma.patients.findUnique({
     where: {
       id: userId,
     },
@@ -98,7 +100,7 @@ export const patientAccountService = async (userId: string) => {
 
 /* Reset password service */
 export const resetPasswordService = async (email: string) => {
-  const existing = await prisma.patient.findUnique({
+  const existing = await prisma.patients.findUnique({
     where: {
       email,
     },
@@ -112,7 +114,7 @@ export const resetPasswordService = async (email: string) => {
 
   const hashPassword = await bcryptjs.hash(newPassword, 10);
 
-  const user = await prisma.patient.update({
+  const user = await prisma.patients.update({
     where: {
       email,
     },
@@ -135,7 +137,7 @@ export const changePasswordService = async (
   userId: string,
   data: ChangePasswordType,
 ) => {
-  const user = await prisma.patient.findUnique({
+  const user = await prisma.patients.findUnique({
     where: {
       id: userId,
     },
@@ -153,7 +155,7 @@ export const changePasswordService = async (
   const hashPassword = await bcryptjs.hash(data.newPassword, 10);
 
   // Update to new password
-  return await prisma.patient.update({
+  return await prisma.patients.update({
     where: {
       id: userId,
     },
@@ -168,7 +170,7 @@ export const updatePatientService = async (
   userId: string,
   data: AllergyAndHealthUpdateType,
 ) => {
-  const user = await prisma.patient.update({
+  const user = await prisma.patients.update({
     where: {
       id: userId,
     },
@@ -187,7 +189,7 @@ export const updatePatientService = async (
 /* Delete Patient's account service */
 export const deletePatientService = async (userId: string) => {
   // Permanently delete patient's account
-  const user = await prisma.patient.delete({
+  const user = await prisma.patients.delete({
     where: {
       id: userId,
     },

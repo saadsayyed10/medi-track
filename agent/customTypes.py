@@ -7,3 +7,6 @@ class HealthIssues(BaseModel):
 class Allergies(BaseModel):
     name: str
     allergies: str
+
+class UploadPrescription(BaseModel):
+    imageUrl: str

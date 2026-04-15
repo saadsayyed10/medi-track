@@ -1,0 +1,56 @@
+// backend/src/api/controllers/upload.controller.ts
+
+// Import request and response to handle API
+import { Request, Response } from "express";
+
+// Import all upload prescription services bundled in one instance
+import * as uploadService from "../services/upload.service";
+
+// Import error middleware class to handle errors appropriately
+import { AppError } from "../../middleware/error.middleware";
+
+/*
+Upload prescription controller
+Method: POST
+Endpoint: /api/upload/prescription
+*/
+export const uploadPrescriptionController = async (
+  req: Request,
+  res: Response,
+) => {
+  const { uploadImage } = req.body;
+
+  if (!uploadImage) {
+    console.log("Please upload prescription image to continue");
+    return res
+      .status(404)
+      .json({ error: "Please upload prescription image to continue" });
+  }
+
+  try {
+    // If user is not authorized, abort request
+    if (!(req as any).user!) {
+      console.log("Unauthorized: you must be logged in to upload prescription");
+      return res.status(401).json({
+        error: "Unauthorized: you must be logged in to upload prescription",
+      });
+    }
+    const userId = (req as any).user.id;
+
+    const data = { uploadImage, userId };
+
+    const prescription = await uploadService.uploadPrescriptionService(data);
+
+    return res
+      .status(201)
+      .json({ message: "Prescription uploaded", prescription });
+  } catch (error: any) {
+    console.log("Is AppError:", error instanceof AppError);
+    console.log("Error name:", error.constructor.name);
+    console.log("Error message:", error.message);
+    const status = error instanceof AppError ? error.statusCode : 500;
+    const message =
+      error instanceof AppError ? error.message : "Internal server error";
+    return res.status(status).json({ error: message });
+  }
+};

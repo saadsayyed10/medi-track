@@ -6,7 +6,7 @@ import { Request, Response } from "express";
 // Import all patient services bundled in one instance
 import * as patientService from "../services/user.service";
 
-// Import error middleware class
+// Import error middleware class to handle errors appropriately
 import { AppError } from "../../middleware/error.middleware";
 
 /*

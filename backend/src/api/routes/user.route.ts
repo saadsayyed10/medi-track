@@ -5,8 +5,9 @@ import { Router } from "express";
 
 // Import all controllers bundled in one instance
 import * as userController from "../controllers/user.controller";
+
+// Import middleware to secure and authorize APIs
 import { protectAuth } from "../../middleware/auth.middleware";
-import { resetPasswordEmailLimiter } from "../../middleware/rate-limit.middleware";
 
 const userRouter = Router();
 
