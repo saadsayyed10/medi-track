@@ -13,4 +13,16 @@ def extractTextFromImage(imageUrl: str) -> str:
     )
 
     response = model.invoke([message])
-    return response.content
+
+    # ✅ Handle both cases
+    if isinstance(response.content, str):
+        return response.content
+    
+    elif isinstance(response.content, list):
+        return " ".join(
+            item.get("text", "")
+            for item in response.content
+            if item.get("type") == "text"
+        )
+
+    return str(response.content)

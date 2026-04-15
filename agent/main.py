@@ -24,7 +24,7 @@ async def extractHealthIssues(data: Allergies):
     
     return result_data
 
-@app.post("/api/upload-prescription")
+@app.post("/api/ai/upload-prescription")
 async def uploadPrescriptionOCR(data: UploadPrescription):
     if data.imageUrl.startswith("http"):
         extractedText = extractTextFromImage(data.imageUrl)

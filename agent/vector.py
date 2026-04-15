@@ -1,29 +1,22 @@
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
-import os
 import uuid
 
 embeddings = GoogleGenerativeAIEmbeddings(
-    model="models/text-embedding-004"
+    model="models/gemini-embedding-2-preview"
 )
-
-db_location = "./chroma_db"
-add_document = not os.path.exists(db_location)
 
 vector_store = Chroma(
-    collection_name = "ocr_prescriptions",
-    embedding_function = embeddings,
-    persist_directory = db_location
+    collection_name="ocr_prescriptions",
+    embedding_function=embeddings,
+    persist_directory="./chroma_db"
 )
-
-if add_document:
-    vector_store.add_documents(documents=documents, ids=ids)
 
 def addOcrDoc(text: str):
     doc = Document(
         page_content=text,
-        metadata= {
+        metadata={
             "source": "ocr_upload"
         }
     )
@@ -34,7 +27,5 @@ def addOcrDoc(text: str):
     )
 
 retriever = vector_store.as_retriever(
-    search_kwargs = {
-        "k": 5
-    }
+    search_kwargs={"k": 5}
 )
