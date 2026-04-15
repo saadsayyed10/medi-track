@@ -17,7 +17,7 @@ import {
 
 // Import helper functions
 import { generateToken } from "../../lib/token";
-import { resetMail } from "../../mails/passwords.mail.";
+import { resetMail } from "../../mails/passwords.mail";
 
 // Import error middleware class
 import { AppError } from "../../middleware/error.middleware";
