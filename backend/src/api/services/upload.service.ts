@@ -38,4 +38,6 @@ export const uploadPrescriptionService = async (data: UploadPrescription) => {
 
 /* Fetch all upload prescriptions service */
 
+/* Fetch all upload prescriptions service */
+
 /* Delete prescription service */
