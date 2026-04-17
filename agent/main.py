@@ -1,10 +1,11 @@
 from fastapi import FastAPI
 
-from customTypes import HealthIssues, Allergies, UploadPrescription
+from customTypes import HealthIssues, Allergies, UploadPrescription, TalkToMedAI
 from healthIssue import healthIssueAPI
 from allergy import allergyAPI
 from ocr import extractTextFromImage
 from vector import getUserRetriever, addOcrDoc
+from medAI import talkToMedAI
 
 app = FastAPI()
 
@@ -51,4 +52,10 @@ async def uploadPrescriptionOCR(data: UploadPrescription):
             ]
         }
     }
+
+@app.post("/api/ai/chat")
+async def chatWithMedAI(data: TalkToMedAI):
+    res = talkToMedAI(data.email, data.question)
+    return res
+    
     
