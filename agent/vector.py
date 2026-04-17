@@ -13,11 +13,13 @@ vector_store = Chroma(
     persist_directory="./chroma_db"
 )
 
-def addOcrDoc(text: str):
+def addOcrDoc(ocrData: dict, email: str):
     doc = Document(
-        page_content=text,
+        page_content=ocrData["raw_text"],
         metadata={
-            "source": "ocr_upload"
+            "source": "ocr_upload",
+            "word_count": ocrData["word_count"],
+            "user_email": email
         }
     )
 
@@ -26,6 +28,13 @@ def addOcrDoc(text: str):
         ids=[str(uuid.uuid4())]
     )
 
-retriever = vector_store.as_retriever(
-    search_kwargs={"k": 5}
+def getUserRetriever(email: str):
+    return vector_store.as_retriever(
+    search_kwargs={
+        "k": 5,
+        "filter": {
+            "user_email": email
+        }
+    },
+    
 )

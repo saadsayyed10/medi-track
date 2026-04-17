@@ -4,7 +4,7 @@ from customTypes import HealthIssues, Allergies, UploadPrescription
 from healthIssue import healthIssueAPI
 from allergy import allergyAPI
 from ocr import extractTextFromImage
-from vector import retriever, addOcrDoc
+from vector import getUserRetriever, addOcrDoc
 
 app = FastAPI()
 
@@ -26,22 +26,29 @@ async def extractHealthIssues(data: Allergies):
 
 @app.post("/api/ai/upload-prescription")
 async def uploadPrescriptionOCR(data: UploadPrescription):
-    if data.imageUrl.startswith("http"):
-        extractedText = extractTextFromImage(data.imageUrl)
+    if not data.imageUrl.startswith("http"):
+        return {"error": "Invalid Image URL"}
+    
+    ocrData = extractTextFromImage(data.imageUrl)
 
         # Storing in vector DB
-        addOcrDoc(extractedText)
+    addOcrDoc(ocrData, data.email)
     
-    res = retriever.invoke(extractedText)
+    userRetriever = getUserRetriever(data.email)
+    res = userRetriever.invoke(ocrData["raw_text"])
     
     return {
-        "extracted_text": extractedText,
-        "retrieved_docs": [
-            {
-                "content": doc.page_content,
-                "metadata": doc.metadata
-            }
-            for doc in res
-        ]
+        "status": "success",
+        "ocr": ocrData,
+        "retrieval": {
+            "count": len(res),
+            "documents": [
+                {
+                    "content": doc.page_content,
+                    "metadata": doc.metadata
+                }
+                for doc in res
+            ]
+        }
     }
     

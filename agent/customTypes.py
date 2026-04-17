@@ -10,3 +10,4 @@ class Allergies(BaseModel):
 
 class UploadPrescription(BaseModel):
     imageUrl: str
+    email: str
