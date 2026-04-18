@@ -12,6 +12,7 @@ import { AppError } from "../../middleware/error.middleware";
 /*
 Upload prescription controller
 Method: POST
+Header: Authorization
 Endpoint: /api/upload/prescription
 */
 export const uploadPrescriptionController = async (
@@ -58,6 +59,7 @@ export const uploadPrescriptionController = async (
 /*
 Fetch all prescription controller
 Method: GET
+Header: Authorization
 Endpoint: /api/upload/prescriptions
 */
 export const allPrescriptionController = async (
@@ -91,6 +93,7 @@ export const allPrescriptionController = async (
 /*
 Delete all prescription controller
 Method: DELETE
+Header: Authorization
 Endpoint: /api/upload/prescription/delete
 */
 export const deleteAllPrescriptionsController = async (

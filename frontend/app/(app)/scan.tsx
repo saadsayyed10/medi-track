@@ -11,7 +11,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 const Scan = () => {
   const [loading, setLoading] = useState(false);
-  const [imageUri, setImageUri] = useState<string | null>(null);
+  const [uploadImage, setUploadImage] = useState<string | null>(null);
 
   const { hydrate } = useAuth();
 
@@ -36,7 +36,7 @@ const Scan = () => {
     setLoading(false);
 
     if (!result.canceled) {
-      setImageUri(result.assets[0].uri);
+      setUploadImage(result.assets[0].uri);
     }
   };
 
@@ -50,9 +50,9 @@ const Scan = () => {
           Position your medical prescription clearly within the frame. Our MedAI
           will extract dosage and timing automatically.
         </Text>
-        {imageUri && (
+        {uploadImage && (
           <Image
-            source={{ uri: imageUri }}
+            source={{ uri: uploadImage }}
             className="w-full h-48 rounded-2xl mt-2"
             resizeMode="cover"
           />
@@ -66,7 +66,7 @@ const Scan = () => {
           <ActivityIndicator color={"white"} />
         ) : (
           <Text className="text-neutral-100 text-center font-semibold text-lg">
-            {imageUri ? "Retake" : "Scan Document"}
+            Scan Document
           </Text>
         )}
       </TouchableOpacity>
