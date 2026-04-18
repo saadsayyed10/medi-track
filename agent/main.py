@@ -55,7 +55,7 @@ async def uploadPrescriptionOCR(data: UploadPrescription):
 
 @app.post("/api/ai/chat")
 async def chatWithMedAI(data: TalkToMedAI):
-    res = talkToMedAI(data.email, data.question)
+    res = talkToMedAI(data.userId, data.question)
     return res
     
     

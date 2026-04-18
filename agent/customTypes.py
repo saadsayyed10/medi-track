@@ -13,5 +13,5 @@ class UploadPrescription(BaseModel):
     email: str
 
 class TalkToMedAI(BaseModel):
-    email: str
+    userId: str
     question: str

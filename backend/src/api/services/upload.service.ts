@@ -11,11 +11,6 @@ import { UploadPrescription } from "../../types/upload.type";
 
 /* Upload prescription service */
 export const uploadPrescriptionService = async (data: UploadPrescription) => {
-  const user = await prisma.patients.findUnique({
-    where: {
-      id: data.userId,
-    },
-  });
   const uploadResponse = await cloudinary.uploader.upload(data.uploadImage);
   const imageUrl = uploadResponse.secure_url;
 
@@ -28,7 +23,7 @@ export const uploadPrescriptionService = async (data: UploadPrescription) => {
 
   const res = await axios.post(`${ENV.AI_URL}/upload-prescription`, {
     imageUrl,
-    email: user?.email,
+    userId: data.userId,
   });
 
   const content = res.data.ocr.lines;
@@ -37,7 +32,22 @@ export const uploadPrescriptionService = async (data: UploadPrescription) => {
 };
 
 /* Fetch all upload prescriptions service */
+export const fetchAllPrescriptions = async (userId: string) => {
+  return await prisma.prescriptions.findMany({
+    where: {
+      patients_id: userId,
+    },
+    select: {
+      uploaded_image: true,
+    },
+  });
+};
 
-/* Fetch all upload prescriptions service */
-
-/* Delete prescription service */
+/* Delete all prescription service */
+export const wipePrescriptionData = async (userId: string) => {
+  return await prisma.prescriptions.deleteMany({
+    where: {
+      patients_id: userId,
+    },
+  });
+};

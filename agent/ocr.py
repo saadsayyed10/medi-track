@@ -33,3 +33,4 @@ def extractTextFromImage(imageUrl: str) -> dict:
         "lines": [line.strip() for line in text.split("\n") if line.strip()],
         "word_count": len(text.split())
     }
+
