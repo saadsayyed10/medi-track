@@ -54,3 +54,69 @@ export const uploadPrescriptionController = async (
     return res.status(status).json({ error: message });
   }
 };
+
+/*
+Fetch all prescription controller
+Method: GET
+Endpoint: /api/upload/prescriptions
+*/
+export const allPrescriptionController = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    // If user is not authorized, abort request
+    if (!(req as any).user!) {
+      console.log("Unauthorized: you must be logged in to upload prescription");
+      return res.status(401).json({
+        error: "Unauthorized: you must be logged in to upload prescription",
+      });
+    }
+    const userId = (req as any).user.id;
+
+    const prescription = await uploadService.fetchAllPrescriptions(userId);
+
+    return res.status(200).json({ prescription });
+  } catch (error: any) {
+    console.log("Is AppError:", error instanceof AppError);
+    console.log("Error name:", error.constructor.name);
+    console.log("Error message:", error.message);
+    const status = error instanceof AppError ? error.statusCode : 500;
+    const message =
+      error instanceof AppError ? error.message : "Internal server error";
+    return res.status(status).json({ error: message });
+  }
+};
+
+/*
+Delete all prescription controller
+Method: DELETE
+Endpoint: /api/upload/prescription/delete
+*/
+export const deleteAllPrescriptionsController = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    // If user is not authorized, abort request
+    if (!(req as any).user!) {
+      console.log("Unauthorized: you must be logged in to upload prescription");
+      return res.status(401).json({
+        error: "Unauthorized: you must be logged in to upload prescription",
+      });
+    }
+    const userId = (req as any).user.id;
+
+    const prescription = await uploadService.wipePrescriptionData(userId);
+
+    return res.status(204).json({ prescription });
+  } catch (error: any) {
+    console.log("Is AppError:", error instanceof AppError);
+    console.log("Error name:", error.constructor.name);
+    console.log("Error message:", error.message);
+    const status = error instanceof AppError ? error.statusCode : 500;
+    const message =
+      error instanceof AppError ? error.message : "Internal server error";
+    return res.status(status).json({ error: message });
+  }
+};

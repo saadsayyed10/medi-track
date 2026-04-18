@@ -4,7 +4,7 @@ from customTypes import HealthIssues, Allergies, UploadPrescription, TalkToMedAI
 from healthIssue import healthIssueAPI
 from allergy import allergyAPI
 from ocr import extractTextFromImage
-from vector import getUserRetriever, addOcrDoc
+from vector import getUserRetriever, addOcrDoc, deleteOCRData
 from medAI import talkToMedAI
 
 app = FastAPI()
@@ -55,7 +55,14 @@ async def uploadPrescriptionOCR(data: UploadPrescription):
 
 @app.post("/api/ai/chat")
 async def chatWithMedAI(data: TalkToMedAI):
-    res = talkToMedAI(data.userId, data.question)
+    res = talkToMedAI(data.email, data.question)
     return res
     
+@app.delete("/api/ai/delete-prescription")
+async def deletePrescriptionData(email: str):
+    deleteOCRData(email)
     
+    return {
+        "status": "success",
+        "message": f"All data deleted for {email}"
+    }

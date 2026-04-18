@@ -1,8 +1,8 @@
 from vector import getUserRetriever
 from LLM import model
 
-def talkToMedAI(userId, question):
-    userRetriever = getUserRetriever(userId)
+def talkToMedAI(email, question):
+    userRetriever = getUserRetriever(email)
     
     docs = userRetriever.invoke(question)
 

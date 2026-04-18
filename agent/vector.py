@@ -28,13 +28,20 @@ def addOcrDoc(ocrData: dict, email: str):
         ids=[str(uuid.uuid4())]
     )
 
-def getUserRetriever(userId: str):
+def getUserRetriever(email: str):
     return vector_store.as_retriever(
     search_kwargs={
         "k": 5,
         "filter": {
-            "user_id": userId
+            "user_email": email
         }
     },
     
 )
+
+def deleteOCRData(email: str):
+    vector_store.delete(
+        where={
+            "user_email": email
+        }
+    )
