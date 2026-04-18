@@ -18,4 +18,18 @@ uploadRouter.post(
   uploadController.uploadPrescriptionController,
 );
 
+// Route to fetch all prescription
+uploadRouter.get(
+  "/prescriptions",
+  protectAuth,
+  uploadController.allPrescriptionController,
+);
+
+// Route to delete all prescription
+uploadRouter.delete(
+  "/delete",
+  protectAuth,
+  uploadController.allPrescriptionController,
+);
+
 export default uploadRouter;

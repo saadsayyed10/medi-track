@@ -10,3 +10,8 @@ class Allergies(BaseModel):
 
 class UploadPrescription(BaseModel):
     imageUrl: str
+    email: str
+
+class TalkToMedAI(BaseModel):
+    email: str
+    question: str
