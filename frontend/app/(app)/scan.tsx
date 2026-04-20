@@ -29,10 +29,9 @@ const Scan = () => {
 
   const handleUploadPrescription = async (imageUri: string) => {
     setLoading(true);
-    console.log("File image:", uploadImage);
     try {
       const res = await uploadPrescriptionAPI(imageUri, token!);
-      setLines(res.data.ocr.lines);
+      setLines(res.data.prescription.content);
     } catch (error: any) {
       const message = error.response?.data?.error ?? error.message;
       alert(message);
@@ -101,7 +100,13 @@ const Scan = () => {
         </TouchableOpacity>
       )}
       {!hideContent && (
-        <View className="flex justify-start items-start">{lines}</View>
+        <View className="flex justify-start items-start">
+          {lines.map((line, i) => (
+            <Text key={i} className="text-neutral-800 text-sm mb-1">
+              {line}
+            </Text>
+          ))}
+        </View>
       )}
     </View>
   );
