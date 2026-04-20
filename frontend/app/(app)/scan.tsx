@@ -5,12 +5,13 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
+  ScrollView,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useAuth } from "@/hooks/useAuth";
 import { uploadPrescriptionAPI } from "@/api/upload.api";
-import { useRouter } from "expo-router";
 import { useScan } from "@/hooks/useScan";
+import Markdown from "react-native-markdown-display";
 
 const Scan = () => {
   const [loading, setLoading] = useState(false);
@@ -21,18 +22,15 @@ const Scan = () => {
 
   const { hydrate, token } = useAuth();
 
-  const router = useRouter();
-
   useEffect(() => {
     hydrate();
   }, []);
 
   const handleUploadPrescription = async (imageUri: string) => {
     setLoading(true);
-    console.log("File image:", uploadImage);
     try {
       const res = await uploadPrescriptionAPI(imageUri, token!);
-      setLines(res.data.ocr.lines);
+      setLines(res.data.prescription.content);
     } catch (error: any) {
       const message = error.response?.data?.error ?? error.message;
       alert(message);
@@ -101,7 +99,38 @@ const Scan = () => {
         </TouchableOpacity>
       )}
       {!hideContent && (
-        <View className="flex justify-start items-start">{lines}</View>
+        <ScrollView style={{ display: "flex", width: "100%", height: "100%" }}>
+          {loading ? (
+            <View className="flex-1 justify-center items-center w-full">
+              <ActivityIndicator
+                color={"darkgreen"}
+                size={"large"}
+                className="text-center"
+              />
+            </View>
+          ) : (
+            <View className="flex-1 flex-col gap-y-4 justify-start items-start w-full mt-20">
+              <Text className="text-4xl font-bold text-neutral-800 capitalize">
+                Prescription Summary
+              </Text>
+              <Markdown
+                style={{
+                  body: { color: "#262626", fontSize: 14 },
+                }}
+              >
+                {lines.join("\n")}
+              </Markdown>
+              <TouchableOpacity
+                onPress={() => setHideContent(true)}
+                className="px-8 py-4 rounded-full bg-green-700 shadow w-full mt-10"
+              >
+                <Text className="text-neutral-100 text-center font-semibold text-lg">
+                  Okay
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </ScrollView>
       )}
     </View>
   );

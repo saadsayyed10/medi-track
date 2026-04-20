@@ -1,9 +1,10 @@
+import { deletePrescriptionsDataAPI } from "@/api/upload.api";
 import { deleteAPI } from "@/api/user.api";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "expo-router";
 import { ChevronRight } from "lucide-react-native";
 import { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 
 const Settings = () => {
   const [loading, setLoading] = useState(false);
@@ -19,7 +20,7 @@ const Settings = () => {
   };
 
   const handleDelete = async () => {
-    setLoading(false);
+    setLoading(true);
     try {
       await deleteAPI(token!);
       alert("Your account is now deleted permanently.");
@@ -29,7 +30,22 @@ const Settings = () => {
       const message = error?.response?.data?.error ?? error?.message;
       alert(message);
     } finally {
-      setLoading(true);
+      setLoading(false);
+      hydrate();
+    }
+  };
+
+  const handleResetData = async () => {
+    setLoading(true);
+    try {
+      await deletePrescriptionsDataAPI(token!);
+      alert("Your prescription data is now deleted permanently.");
+      await logout();
+    } catch (error: any) {
+      const message = error?.response?.data?.error ?? error?.message;
+      alert(message);
+    } finally {
+      setLoading(false);
       hydrate();
     }
   };
@@ -81,11 +97,15 @@ const Settings = () => {
           Danger Zone
         </Text>
         <TouchableOpacity
-          onPress={handleDelete}
+          onPress={handleResetData}
           className="flex justify-between items-start w-full px-3 py-5 shadow rounded-md bg-white flex-row mt-1 border border-neutral-200"
         >
           <Text className="font-medium text-base capitalize text-red-600 tracking-wider">
-            Delete Account
+            {loading ? (
+              <ActivityIndicator className="text-center" color={"red"} />
+            ) : (
+              "Reset Data"
+            )}
           </Text>
           <ChevronRight width={20} height={20} color={"red"} />
         </TouchableOpacity>
@@ -95,6 +115,19 @@ const Settings = () => {
         >
           <Text className="font-medium text-base capitalize text-red-600 tracking-wider">
             Logout
+          </Text>
+          <ChevronRight width={20} height={20} color={"red"} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={handleDelete}
+          className="flex justify-between items-start w-full px-3 py-5 shadow rounded-md bg-white flex-row mt-1 border border-neutral-200"
+        >
+          <Text className="font-medium text-base capitalize text-red-600 tracking-wider">
+            {loading ? (
+              <ActivityIndicator color={"red"} className="text-center" />
+            ) : (
+              "Delete Account"
+            )}
           </Text>
           <ChevronRight width={20} height={20} color={"red"} />
         </TouchableOpacity>
