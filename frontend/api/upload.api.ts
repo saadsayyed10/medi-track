@@ -28,3 +28,11 @@ export const uploadPrescriptionAPI = async (
     },
   });
 };
+
+export const deletePrescriptionsDataAPI = async (token: string) => {
+  return await axios.delete(`${serverURL}/upload/delete`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
