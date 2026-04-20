@@ -5,25 +5,26 @@ export const uploadPrescriptionAPI = async (
   uploadImage: string,
   token: string,
 ) => {
-  // Convert the local URI to base64
-  const response = await fetch(uploadImage);
-  const blob = await response.blob();
+  const formData = new FormData();
 
-  const base64 = await new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result as string);
-    reader.onerror = reject;
-    reader.readAsDataURL(blob);
-  });
+  const extension = uploadImage.split(".").pop()?.toLowerCase() ?? "jpg";
+  const mimeTypes: Record<string, string> = {
+    jpg: "image/jpeg",
+    jpeg: "image/jpeg",
+    png: "image/png",
+    heic: "image/heic",
+  };
 
-  return await axios.post(
-    `${serverURL}/upload/prescription`,
-    { uploadImage: base64 }, // sends "data:image/jpeg;base64,/9j/..."
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
+  formData.append("prescription", {
+    uri: uploadImage,
+    name: `prescription.${extension}`,
+    type: mimeTypes[extension] ?? "image/jpeg",
+  } as any);
+
+  return await axios.post(`${serverURL}/upload/prescription`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
     },
-  );
+  });
 };

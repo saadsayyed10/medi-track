@@ -19,15 +19,6 @@ export const uploadPrescriptionController = async (
   req: Request,
   res: Response,
 ) => {
-  const { uploadImage } = req.body;
-
-  if (!uploadImage) {
-    console.log("Please upload prescription image to continue");
-    return res
-      .status(404)
-      .json({ error: "Please upload prescription image to continue" });
-  }
-
   try {
     // If user is not authorized, abort request
     if (!(req as any).user!) {
@@ -36,9 +27,17 @@ export const uploadPrescriptionController = async (
         error: "Unauthorized: you must be logged in to upload prescription",
       });
     }
-    const userId = (req as any).user.id;
 
-    const data = { uploadImage, userId };
+    if (!req.file) {
+      return res
+        .status(404)
+        .json({ error: "Please upload prescription image to continue" });
+    }
+
+    const userId = (req as any).user.id;
+    const base64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
+
+    const data = { uploadImage: base64, userId };
 
     const prescription = await uploadService.uploadPrescriptionService(data);
 
