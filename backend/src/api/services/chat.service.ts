@@ -6,7 +6,7 @@ import { type ChatWithMedAI } from "../../types/chat.type";
 // Import ORM instance
 import prisma from "../../lib/prisma.orm";
 
-// Import helper libs and functions
+// Import helper configs, libs and functions
 import axios from "axios";
 import { ENV } from "../../config/env.config";
 
