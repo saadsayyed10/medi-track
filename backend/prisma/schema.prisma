@@ -21,11 +21,23 @@ model patients {
   prescriptions prescriptions[] // 1-M Relationship with Prescriptions
 
   created_at DateTime @default(now())
+  chats      chats[]
 }
 
 model prescriptions {
   id             String @id @default(uuid())
   uploaded_image String
+
+  patients_id String?
+  patients    patients? @relation(fields: [patients_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  created_at DateTime @default(now())
+}
+
+model chats {
+  id       String @id @default(uuid())
+  question String
+  answer   String
 
   patients_id String?
   patients    patients? @relation(fields: [patients_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
