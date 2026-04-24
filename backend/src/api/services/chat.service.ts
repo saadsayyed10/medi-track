@@ -17,11 +17,13 @@ export const chatWithMedAIService = async (data: ChatWithMedAI) => {
     },
   });
 
-  const email = user?.email;
   const question = data.question;
 
-  const res = await axios.post(`${ENV.AI_URL}/chat`, { email, question });
-  const answer = res.data.answer[0].text;
+  const res = await axios.post(`${ENV.AI_URL}/chat`, {
+    email: user?.email,
+    question,
+  });
+  const answer = res.data.answer;
 
   const chat = await prisma.chats.create({
     data: {
