@@ -51,7 +51,7 @@ export const chatWithMedAIController = async (req: Request, res: Response) => {
 Fetch all chats per patient controller
 Method: GET
 Header: Authorization
-Endpoint: /api/chats
+Endpoint: /api/chat/all
 */
 export const fetchAllChatsForPatientController = async (
   req: Request,
