@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react-native";
 import { useAuth } from "@/hooks/useAuth";
-import { fetchChatsPerPatientAPI } from "@/api/chat.api";
+import { chatWithMedAIAPI, fetchChatsPerPatientAPI } from "@/api/chat.api";
 
 interface Chats {
   id: string;
@@ -18,10 +18,13 @@ interface Chats {
 }
 
 const Chat = () => {
-  const [loading, setLoading] = useState(false);
   const { token, hydrate } = useAuth();
 
+  const [loading, setLoading] = useState(false);
+  const [aiLoading, setAILoading] = useState(false);
+
   const [chat, setChat] = useState<Chats[]>([]);
+  const [question, setQuestion] = useState("");
 
   useEffect(() => {
     hydrate();
@@ -40,9 +43,36 @@ const Chat = () => {
     }
   };
 
+  const handleChat = async () => {
+    if (!question) {
+      alert("Please enter question");
+      return;
+    }
+    setAILoading(true);
+    try {
+      await chatWithMedAIAPI(question, token!);
+
+      setQuestion("");
+    } catch (error: any) {
+      const message = error.response?.data?.error ?? error.message;
+      alert(message);
+    } finally {
+      setAILoading(false);
+      fetchAllChats();
+    }
+  };
+
   useEffect(() => {
     fetchAllChats();
   }, []);
+
+  if (loading) {
+    return (
+      <View className="flex justify-center items-center w-full min-h-screen">
+        <ActivityIndicator color={"darkgreen"} size={"large"} />
+      </View>
+    );
+  }
 
   return (
     <>
@@ -76,12 +106,17 @@ const Chat = () => {
       <View className="flex justify-center items-center w-full absolute bottom-0 flex-row gap-x-2 px-6 py-3 bg-white shadow-md">
         <View className="flex justify-start items-start bg-neutral-200 px-2 py-1 rounded shadow w-[85%]">
           <TextInput
+            value={question}
+            onChangeText={setQuestion}
             placeholder="Type your response here..."
             className="w-full"
           />
         </View>
-        <TouchableOpacity className="px-2 py-4 rounded shadow w-[15%] bg-green-700 flex justify-center items-center">
-          {loading ? (
+        <TouchableOpacity
+          onPress={handleChat}
+          className="px-2 py-4 rounded shadow w-[15%] bg-green-700 flex justify-center items-center"
+        >
+          {aiLoading ? (
             <ActivityIndicator color={"white"} />
           ) : (
             <ArrowRight color={"white"} />
