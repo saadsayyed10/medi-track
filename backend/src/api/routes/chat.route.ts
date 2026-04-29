@@ -11,7 +11,14 @@ import { protectAuth } from "../../middleware/auth.middleware";
 
 const chatRouter = Router();
 
-// Route to register patient account
+// Route to chat with MedAI
 chatRouter.post("/", protectAuth, chatController.chatWithMedAIController);
+
+// Route to fetch all chats
+chatRouter.get(
+  "/all",
+  protectAuth,
+  chatController.fetchAllChatsForPatientController,
+);
 
 export default chatRouter;

@@ -35,3 +35,11 @@ export const chatWithMedAIService = async (data: ChatWithMedAI) => {
 
   return chat;
 };
+
+export const fetchAllChatsForPatientService = async (patientId: string) => {
+  return await prisma.chats.findMany({
+    where: {
+      patients_id: patientId,
+    },
+  });
+};
