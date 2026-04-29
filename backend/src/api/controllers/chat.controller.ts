@@ -46,3 +46,35 @@ export const chatWithMedAIController = async (req: Request, res: Response) => {
     return res.status(status).json({ error: message });
   }
 };
+
+/*
+Fetch all chats per patient controller
+Method: GET
+Header: Authorization
+Endpoint: /api/chats
+*/
+export const fetchAllChatsForPatientController = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    // If user is not authorized, abort request
+    if (!(req as any).user!) {
+      console.log("Unauthorized: you must be logged in to upload prescription");
+      return res.status(401).json({
+        error: "Unauthorized: you must be logged in to upload prescription",
+      });
+    }
+    const userId = (req as any).user.id;
+
+    const chats = await chatServices.fetchAllChatsForPatientService(userId);
+    res.status(200).json({ chats });
+  } catch (error: any) {
+    console.log("Is AppError:", error instanceof AppError);
+    console.log("Error name:", error.constructor.name);
+    console.log("Error message:", error.message);
+    const status = error instanceof AppError ? error.statusCode : 400;
+    const message = error instanceof AppError ? error.message : "Bad request";
+    return res.status(status).json({ error: message });
+  }
+};
