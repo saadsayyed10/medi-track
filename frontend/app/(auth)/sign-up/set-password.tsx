@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   TextInput,
+  Platform,
 } from "react-native";
 
 const SetPassword = () => {
@@ -109,7 +110,7 @@ const SetPassword = () => {
                 value={password!}
                 onChangeText={setPassword}
                 placeholder="******************"
-                className="w-full"
+                className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
               />
             </View>
           </View>
@@ -125,7 +126,7 @@ const SetPassword = () => {
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
                 placeholder="******************"
-                className="w-full"
+                className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
               />
             </View>
           </View>

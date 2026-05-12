@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   ActivityIndicator,
+  Platform,
 } from "react-native";
 
 const Login = () => {
@@ -72,7 +73,7 @@ const Login = () => {
               <TextInput
                 placeholder="patient@meditrack.com"
                 keyboardType="email-address"
-                className="w-full"
+                className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
                 value={email}
                 onChangeText={setEmail}
               />
@@ -93,7 +94,7 @@ const Login = () => {
               <TextInput
                 keyboardType="visible-password"
                 placeholder="**************"
-                className="w-full"
+                className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
                 value={password}
                 onChangeText={setPassword}
               />

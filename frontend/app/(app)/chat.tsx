@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   ScrollView,
+  Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react-native";
@@ -109,7 +110,7 @@ const Chat = () => {
             value={question}
             onChangeText={setQuestion}
             placeholder="Type your response here..."
-            className="w-full"
+            className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
           />
         </View>
         <TouchableOpacity

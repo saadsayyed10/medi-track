@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
+  Platform,
 } from "react-native";
 import { ArrowRight } from "lucide-react-native";
 import { useSignUp } from "@/hooks/useSignUp";
@@ -124,7 +125,7 @@ const AIQuestionsHealth = () => {
                   value={healthIssueProblem}
                   onChangeText={setHealthIssueProblem}
                   placeholder="Type your response here..."
-                  className="w-full"
+                  className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
                 />
               </View>
               <TouchableOpacity
