@@ -1,11 +1,7 @@
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
+from LLM import embeddings
 import uuid
-
-embeddings = GoogleGenerativeAIEmbeddings(
-    model="models/gemini-embedding-2-preview"
-)
 
 vector_store = Chroma(
     collection_name="ocr_prescriptions",

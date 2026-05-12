@@ -5,6 +5,7 @@
 agent/.venv
 agent/.env
 agent/__pycache__
+agent/chroma_db
 
 # Business-Logic Server (Backend)
 backend/node_modules
