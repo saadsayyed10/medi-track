@@ -1,0 +1,58 @@
+"use strict";
+// backend/src/api/routes/user.route.ts
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+// Import library
+const express_1 = require("express");
+// Import all controllers bundled in one instance
+const userController = __importStar(require("../controllers/user.controller"));
+// Import middleware to secure and authorize APIs
+const auth_middleware_1 = require("../../middleware/auth.middleware");
+const userRouter = (0, express_1.Router)();
+// Route to register patient account
+userRouter.post("/register", userController.signUpPatientController);
+// Route to login patient account
+userRouter.post("/login", userController.signInPatientController);
+// Route to fetch patient account (token needed)
+userRouter.get("/profile", auth_middleware_1.protectAuth, userController.patientAccountController);
+// Route to reset patient's forgotten account password (token needed)
+userRouter.patch("/reset-password", userController.resetPasswordController);
+// Route to change patient's account password (token needed)
+userRouter.put("/change-password", auth_middleware_1.protectAuth, userController.changePasswordController);
+// Route to update patient's allergies and health issues (token needed)
+userRouter.put("/update", auth_middleware_1.protectAuth, userController.updatePatientController);
+// Route to delete patient's account (token needed)
+userRouter.delete("/delete", auth_middleware_1.protectAuth, userController.deletePatientController);
+exports.default = userRouter;
