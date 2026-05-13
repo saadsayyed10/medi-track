@@ -9,18 +9,26 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useAuth } from "@/hooks/useAuth";
-import { uploadPrescriptionAPI } from "@/api/upload.api";
+import {
+  fetchPrescriptionDataAPI,
+  uploadPrescriptionAPI,
+} from "@/api/upload.api";
 import { useScan } from "@/hooks/useScan";
 import Markdown from "react-native-markdown-display";
+import { useRouter } from "expo-router";
 
 const Scan = () => {
   const [loading, setLoading] = useState(false);
   const { uploadImage, setUploadImage } = useScan();
   const [lines, setLines] = useState<string[]>([]);
 
+  const [prescription, setPrescription] = useState<string>("");
+
   const [hideContent, setHideContent] = useState(true);
 
   const { hydrate, token } = useAuth();
+
+  const router = useRouter();
 
   useEffect(() => {
     hydrate();
@@ -63,6 +71,39 @@ const Scan = () => {
       await handleUploadPrescription(uri); // pass directly
     }
   };
+
+  const handleFetchPrescription = async () => {
+    try {
+      const res = await fetchPrescriptionDataAPI(token!);
+      setPrescription(res.data.prescription);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    handleFetchPrescription();
+  }, [prescription]);
+
+  if (prescription.length !== 0) {
+    return (
+      <View className="flex-1 justify-between items-center w-full px-6 py-16 flex-col gap-y-6">
+        <View />
+        <Text className="text-center text-lg text-neutral-600">
+          You have already uploaded the prescription image, please chat to MedAI
+          or delete and upload a new one.
+        </Text>
+        <TouchableOpacity
+          onPress={() => router.replace("/(app)/chat")}
+          className="px-8 py-4 rounded-full bg-green-700 shadow w-full"
+        >
+          <Text className="text-neutral-100 text-center font-semibold text-lg">
+            Chat to MedAI
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 
   return (
     <View className="flex-1 justify-center items-center w-full p-6">
