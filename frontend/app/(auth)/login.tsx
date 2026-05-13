@@ -92,8 +92,9 @@ const Login = () => {
             </View>
             <View className="flex justify-start items-start bg-neutral-100 w-full px-2 py-1 rounded-lg shadow">
               <TextInput
+                secureTextEntry={true}
                 keyboardType="visible-password"
-                placeholder="**************"
+                placeholder="•••••••••••••"
                 className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
                 value={password}
                 onChangeText={setPassword}

@@ -30,7 +30,7 @@ export default function Index() {
             onPress={() => router.push("/(app)/chat")}
             className="bg-neutral-100 px-6 rounded-full shadow-lg py-2"
           >
-            <Text className="text-green-700 font-semibold text-lg">Chat</Text>
+            <Text className="text-green-700 font-semibold text-lg">Scan</Text>
           </TouchableOpacity>
         )}
       </View>
