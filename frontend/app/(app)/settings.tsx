@@ -16,7 +16,7 @@ const Settings = () => {
   const handleLogout = async () => {
     await logout();
     await hydrate();
-    router.push("/login");
+    router.push("/");
   };
 
   const handleDelete = async () => {
