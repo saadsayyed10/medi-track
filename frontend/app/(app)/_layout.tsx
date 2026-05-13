@@ -29,20 +29,6 @@ const AppLayout = () => {
       }}
     >
       <Tabs.Screen
-        name="dashboard"
-        options={{
-          title: "Dashboard",
-          tabBarIcon: ({ color, size, focused }) => (
-            <LayoutDashboard
-              size={size}
-              color={color}
-              fill={focused ? color : "transparent"}
-            />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
         name="scan"
         options={{
           title: "Scan",
