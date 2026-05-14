@@ -1,10 +1,10 @@
 ## About the App
 
-**MediTrack** is an AI-powered native mobile application for iOS and Android which helps patients to solve their queries in one go. Patients uploads the image prescription given by doctor or labeled on medicine then ask AI chatbot about whatever the related question they have with the medicine they are taking. Patients can also keep track of their history of chat logs. 
+**MediTrack** is an AI-powered native mobile application for iOS and Android which helps patients to solve their queries in one go. Patients uploads the image prescription given by doctor or labeled on medicine then ask AI chatbot about whatever the related question they have with the medicine they are taking. Patients can also keep track of their history of chat logs.
 
 ## What problem does this App solves?
 
-**MediTrack** helps patients to solve and get answers to their doubt which they get while consuming meds. This app answers all the doubt by learning uploaded prescriptions by the patients and help them get better. 
+**MediTrack** helps patients to solve and get answers to their doubt which they get while consuming meds. This app answers all the doubt by learning uploaded prescriptions by the patients and help them get better.
 
 ## Features of the App
 
@@ -14,3 +14,8 @@
 4. **AI Chatbot:** An AI chatbot which is trained on patient’s scanned prescription. This AI Chatbot answers all the doubts and issues of the patients which are related to uploaded medicines only. This chatbot doesn’t know other things which hasn’t been uploaded.
 5. **History:** This is the chat log which is not editable i.e read-only. User can only read the previous chat to remember forgotten asked questions.
 6. **Profile:** This is the profile that stores information of patient, options to edit or delete the account or change password.
+
+## App Links
+
+1. **Landing Page**: https://meditrackbygrove.vercel.app
+2. **Android APK**: https://shorturl.at/jmtsK
