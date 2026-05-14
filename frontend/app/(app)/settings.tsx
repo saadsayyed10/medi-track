@@ -8,6 +8,7 @@ import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 
 const Settings = () => {
   const [loading, setLoading] = useState(false);
+  const [resetLoading, setResetLoading] = useState(false);
 
   const { logout, hydrate, user, token } = useAuth();
 
@@ -36,16 +37,15 @@ const Settings = () => {
   };
 
   const handleResetData = async () => {
-    setLoading(true);
+    setResetLoading(true);
     try {
       await deletePrescriptionsDataAPI(token!);
       alert("Your prescription data is now deleted permanently.");
-      await logout();
     } catch (error: any) {
       const message = error?.response?.data?.error ?? error?.message;
       alert(message);
     } finally {
-      setLoading(false);
+      setResetLoading(false);
       hydrate();
     }
   };
@@ -85,36 +85,30 @@ const Settings = () => {
           </Text>
           <ChevronRight width={20} height={20} color={"lightgray"} />
         </TouchableOpacity>
-        <TouchableOpacity className="flex justify-between items-start w-full px-3 py-5 shadow rounded-md bg-white flex-row mt-1 border border-neutral-200">
-          <Text className="font-medium text-base capitalize text-neutral-700 tracking-wider">
-            View and Update Profile
-          </Text>
-          <ChevronRight width={20} height={20} color={"lightgray"} />
-        </TouchableOpacity>
       </View>
       <View className="flex justify-start items-start w-full flex-col gap-y-2">
         <Text className="font-bold text-xs uppercase text-red-500 tracking-wider">
           Danger Zone
         </Text>
         <TouchableOpacity
-          onPress={handleResetData}
-          className="flex justify-between items-start w-full px-3 py-5 shadow rounded-md bg-white flex-row mt-1 border border-neutral-200"
-        >
-          <Text className="font-medium text-base capitalize text-red-600 tracking-wider">
-            {loading ? (
-              <ActivityIndicator className="text-center" color={"red"} />
-            ) : (
-              "Reset Data"
-            )}
-          </Text>
-          <ChevronRight width={20} height={20} color={"red"} />
-        </TouchableOpacity>
-        <TouchableOpacity
           onPress={handleLogout}
           className="flex justify-between items-start w-full px-3 py-5 shadow rounded-md bg-white flex-row mt-1 border border-neutral-200"
         >
           <Text className="font-medium text-base capitalize text-red-600 tracking-wider">
             Logout
+          </Text>
+          <ChevronRight width={20} height={20} color={"red"} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={handleResetData}
+          className="flex justify-between items-start w-full px-3 py-5 shadow rounded-md bg-white flex-row mt-1 border border-neutral-200"
+        >
+          <Text className="font-medium text-base capitalize text-red-600 tracking-wider">
+            {resetLoading ? (
+              <ActivityIndicator className="text-center" color={"red"} />
+            ) : (
+              "Reset Data"
+            )}
           </Text>
           <ChevronRight width={20} height={20} color={"red"} />
         </TouchableOpacity>

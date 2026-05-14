@@ -32,6 +32,7 @@ const Scan = () => {
 
   useEffect(() => {
     hydrate();
+    handleFetchPrescription();
   }, []);
 
   const handleUploadPrescription = async (imageUri: string) => {
@@ -73,25 +74,29 @@ const Scan = () => {
   };
 
   const handleFetchPrescription = async () => {
+    setLoading(true);
     try {
       const res = await fetchPrescriptionDataAPI(token!);
       setPrescription(res.data.prescription);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
+      hydrate();
     }
   };
 
-  useEffect(() => {
-    handleFetchPrescription();
-  }, [prescription]);
-
   if (prescription.length !== 0) {
-    return (
+    return loading ? (
+      <View className="flex-1 justify-center items-center w-full">
+        <ActivityIndicator color={"darkgreen"} size={"large"} />
+      </View>
+    ) : (
       <View className="flex-1 justify-between items-center w-full px-6 py-16 flex-col gap-y-6">
         <View />
         <Text className="text-center text-lg text-neutral-600">
           You have already uploaded the prescription image, please chat to MedAI
-          or delete and upload a new one.
+          or delete existing one from the settings then upload a new one.
         </Text>
         <TouchableOpacity
           onPress={() => router.replace("/(app)/chat")}
