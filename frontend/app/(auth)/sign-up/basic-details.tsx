@@ -9,6 +9,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
+  Platform,
 } from "react-native";
 
 const BasicDetails = () => {
@@ -70,7 +71,7 @@ const BasicDetails = () => {
                   value={name!}
                   onChangeText={setName}
                   placeholder="Saad Sayyed"
-                  className="w-full"
+                  className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
                 />
               </View>
             </View>
@@ -87,7 +88,7 @@ const BasicDetails = () => {
                   onChangeText={setEmail}
                   keyboardType="email-address"
                   placeholder="patient@meditrack.com"
-                  className="w-full"
+                  className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
                 />
               </View>
             </View>
@@ -104,7 +105,7 @@ const BasicDetails = () => {
                   onChangeText={setAge}
                   keyboardType="numeric"
                   placeholder="22"
-                  className="w-full"
+                  className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
                 />
               </View>
             </View>

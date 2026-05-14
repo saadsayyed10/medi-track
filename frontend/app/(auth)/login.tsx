@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   ActivityIndicator,
+  Platform,
 } from "react-native";
 
 const Login = () => {
@@ -72,7 +73,7 @@ const Login = () => {
               <TextInput
                 placeholder="patient@meditrack.com"
                 keyboardType="email-address"
-                className="w-full"
+                className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
                 value={email}
                 onChangeText={setEmail}
               />
@@ -91,9 +92,10 @@ const Login = () => {
             </View>
             <View className="flex justify-start items-start bg-neutral-100 w-full px-2 py-1 rounded-lg shadow">
               <TextInput
+                secureTextEntry={true}
                 keyboardType="visible-password"
-                placeholder="**************"
-                className="w-full"
+                placeholder="•••••••••••••"
+                className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
                 value={password}
                 onChangeText={setPassword}
               />

@@ -75,5 +75,11 @@ export const wipePrescriptionData = async (userId: string) => {
 
   const deletedPrescription = res.data;
 
+  await prisma.prescriptions.deleteMany({
+    where: {
+      patients_id: userId,
+    },
+  });
+
   return deletedPrescription;
 };

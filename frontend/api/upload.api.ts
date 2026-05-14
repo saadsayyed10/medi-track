@@ -29,6 +29,14 @@ export const uploadPrescriptionAPI = async (
   });
 };
 
+export const fetchPrescriptionDataAPI = async (token: string) => {
+  return await axios.get(`${serverURL}/upload/prescriptions`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export const deletePrescriptionsDataAPI = async (token: string) => {
   return await axios.delete(`${serverURL}/upload/delete`, {
     headers: {

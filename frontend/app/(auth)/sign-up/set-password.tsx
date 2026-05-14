@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   TextInput,
+  Platform,
 } from "react-native";
 
 const SetPassword = () => {
@@ -65,6 +66,8 @@ const SetPassword = () => {
       await setAuth(token, user);
       reset();
 
+      alert("Account created! Welcome to MediTrack");
+
       router.replace("/");
     } catch (error: any) {
       alert(error.response?.data?.error ?? error.message);
@@ -109,7 +112,7 @@ const SetPassword = () => {
                 value={password!}
                 onChangeText={setPassword}
                 placeholder="******************"
-                className="w-full"
+                className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
               />
             </View>
           </View>
@@ -125,7 +128,7 @@ const SetPassword = () => {
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
                 placeholder="******************"
-                className="w-full"
+                className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
               />
             </View>
           </View>

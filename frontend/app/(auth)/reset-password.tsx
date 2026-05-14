@@ -4,6 +4,7 @@ import {
   TextInput,
   ActivityIndicator,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import React, { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
@@ -64,7 +65,7 @@ const ResetPassword = () => {
             value={email}
             onChangeText={setEmail}
             placeholder="patient@medi.track"
-            className="w-full"
+            className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
           />
         </View>
         {error && (

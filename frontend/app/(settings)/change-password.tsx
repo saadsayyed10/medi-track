@@ -4,10 +4,11 @@ import {
   TextInput,
   ActivityIndicator,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import React, { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { resetPasswordAPI } from "@/api/auth.api";
+// import { resetPasswordAPI } from "@/api/auth.api";
 import { useRouter } from "expo-router";
 import { changePasswordAPI } from "@/api/user.api";
 
@@ -80,7 +81,7 @@ const ChangePassword = () => {
               value={oldPassword}
               onChangeText={setOldPassword}
               placeholder="***********************"
-              className="w-full"
+              className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
             />
           </View>
         </View>
@@ -97,7 +98,7 @@ const ChangePassword = () => {
               value={newPassword}
               onChangeText={setNewPassword}
               placeholder="***********************"
-              className="w-full"
+              className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
             />
           </View>
         </View>
@@ -114,7 +115,7 @@ const ChangePassword = () => {
               value={confirmNewPassword}
               onChangeText={setConfirmNewPassword}
               placeholder="***********************"
-              className="w-full"
+              className={`${Platform.OS === "ios" ? "h-10 w-full" : "w-full"}`}
             />
           </View>
         </View>
