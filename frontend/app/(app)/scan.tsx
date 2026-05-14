@@ -86,29 +86,29 @@ const Scan = () => {
     }
   };
 
-  if (prescription.length !== 0) {
-    return loading ? (
-      <View className="flex-1 justify-center items-center w-full">
-        <ActivityIndicator color={"darkgreen"} size={"large"} />
-      </View>
-    ) : (
-      <View className="flex-1 justify-between items-center w-full px-6 py-16 flex-col gap-y-6">
-        <View />
-        <Text className="text-center text-lg text-neutral-600">
-          You have already uploaded the prescription image, please chat to MedAI
-          or delete existing one from the settings then upload a new one.
-        </Text>
-        <TouchableOpacity
-          onPress={() => router.replace("/(app)/chat")}
-          className="px-8 py-4 rounded-full bg-green-700 shadow w-full"
-        >
-          <Text className="text-neutral-100 text-center font-semibold text-lg">
-            Chat to MedAI
-          </Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+  // if (prescription.length !== 0) {
+  //   return loading ? (
+  //     <View className="flex-1 justify-center items-center w-full">
+  //       <ActivityIndicator color={"darkgreen"} size={"large"} />
+  //     </View>
+  //   ) : (
+  //     <View className="flex-1 justify-between items-center w-full px-6 py-16 flex-col gap-y-6">
+  //       <View />
+  //       <Text className="text-center text-lg text-neutral-600">
+  //         You have already uploaded the prescription image, please chat to MedAI
+  //         or delete existing one from the settings then upload a new one.
+  //       </Text>
+  //       <TouchableOpacity
+  //         onPress={() => router.replace("/(app)/chat")}
+  //         className="px-8 py-4 rounded-full bg-green-700 shadow w-full"
+  //       >
+  //         <Text className="text-neutral-100 text-center font-semibold text-lg">
+  //           Chat to MedAI
+  //         </Text>
+  //       </TouchableOpacity>
+  //     </View>
+  //   );
+  // }
 
   return (
     <View className="flex-1 justify-center items-center w-full p-6">
