@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   ScrollView,
   Platform,
+  KeyboardAvoidingView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react-native";
@@ -148,7 +149,10 @@ const Chat = () => {
         </View>
       </ScrollView>
       {prescription.length !== 0 && (
-        <View className="flex justify-center items-center w-full absolute bottom-0 flex-row gap-x-2 px-6 py-3 bg-white shadow-md">
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          className="flex justify-center items-center w-full absolute bottom-0 flex-row gap-x-2 px-6 py-3 bg-white shadow-md"
+        >
           <View className="flex justify-start items-start bg-neutral-200 px-2 py-1 rounded shadow w-[85%]">
             <TextInput
               value={question}
@@ -167,7 +171,7 @@ const Chat = () => {
               <ArrowRight color={"white"} />
             )}
           </TouchableOpacity>
-        </View>
+        </KeyboardAvoidingView>
       )}
     </>
   );

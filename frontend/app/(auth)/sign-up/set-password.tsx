@@ -66,6 +66,8 @@ const SetPassword = () => {
       await setAuth(token, user);
       reset();
 
+      alert("Account created! Welcome to MediTrack");
+
       router.replace("/");
     } catch (error: any) {
       alert(error.response?.data?.error ?? error.message);
